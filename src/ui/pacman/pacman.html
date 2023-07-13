@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>DevDays Arcade - Auth0 Pacman</title>
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'" />
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'" />
+    <link rel="stylesheet" type="text/css" href="./pacman.css">
+</head>
+
+<body>
+    <div id="shim">shim for font face</div>
+    <h1>DevDays Pacman</h1>
+    <div id="pacman"></div>
+
+    <script type="text/javascript" src="../lib/modernizr.2.8.3.min.js"></script>
+    <script type="text/javascript" src="../lib/jquery.2.1.3.min.js"></script>
+    <script type="text/javascript" src="./pacman.js"></script>
+    <script>
+
+        var el = document.getElementById("pacman");
+
+        if (Modernizr.canvas && Modernizr.localstorage &&
+            Modernizr.audio && (Modernizr.audio.ogg || Modernizr.audio.mp3)) {
+            window.setTimeout(function () { PACMAN.init(el, "./"); }, 0);
+        } else {
+            el.innerHTML = "Sorry, needs a decent browser<br /><small>" +
+                "(firefox 3.6+, Chrome 4+, Opera 10+ and Safari 4+)</small>";
+        }
+    </script>
+</body>
+
+</html>

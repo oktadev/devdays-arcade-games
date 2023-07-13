@@ -1,0 +1,28 @@
+@font-face {
+  font-family: "BDCartoonShoutRegular";
+  src: url("../lib/font.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+#pacman {
+  height: 100%;
+  width: 800px;
+  margin: 20px auto;
+}
+#shim {
+  font-family: BDCartoonShoutRegular;
+  position: absolute;
+  visibility: hidden;
+}
+h1 {
+  font-family: BDCartoonShoutRegular;
+  text-align: center;
+}
+body {
+  width: 800px;
+  margin: 0px auto;
+  font-family: sans-serif;
+}
+a {
+  text-decoration: none;
+}

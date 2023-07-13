@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "BDCartoonShoutRegular";
+  src: url("../lib/font.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  /* background-color: dimgray; */
+  text-align: center;
+}
+#shim {
+  font-family: BDCartoonShoutRegular;
+  position: absolute;
+  visibility: hidden;
+}
+h1 {
+  font-family: BDCartoonShoutRegular;
+  text-align: center;
+}
+canvas {
+  background-color: black;
+  border: 1px solid black;
+}
