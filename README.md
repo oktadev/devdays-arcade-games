@@ -2,11 +2,7 @@
 
 Custom Pacman and Space Invader games for Auth0 DevDays experience at Oktane 23
 
-The game is written in Javascript using the below frameworks
-
-- [Svelte](https://svelte.dev/): For frontend
-- [Vite](https://vitejs.dev/): For frontend packaging
-- [Electron](https://www.electronjs.org/): For packaging as a desktop app
+The game is written in Javascript and packaged as an [Electron](https://www.electronjs.org/) desktop app
 
 ## Installing and running the game
 
