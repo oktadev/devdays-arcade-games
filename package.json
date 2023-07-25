@@ -5,23 +5,32 @@
   "description": "Custom Pacman and Space Invaders game",
   "main": "src/main.js",
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish"
+    "start": "electron src/main.js",
+    "postinstall": "electron-builder install-app-deps",
+    "build": "electron-builder --mac --windows --linux",
+    "release": "electron-builder --mac --windows --linux --publish always"
   },
   "author": "Deepu K Sasidharan",
   "license": "MIT",
-  "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
-  },
   "devDependencies": {
-    "@electron-forge/cli": "^6.2.1",
-    "@electron-forge/maker-deb": "^6.2.1",
-    "@electron-forge/maker-rpm": "^6.2.1",
-    "@electron-forge/maker-squirrel": "^6.2.1",
-    "@electron-forge/maker-zip": "^6.2.1",
-    "@electron-forge/plugin-auto-unpack-natives": "^6.2.1",
-    "electron": "^25.3.0"
+    "electron": "^25.3.0",
+    "electron-builder": "^24.4.0"
+  },
+  "build": {
+    "appId": "com.okta.devday",
+    "win": {},
+    "productName": "DevDay Arcade Games",
+    "mac": {
+      "category": "public.app-category.games"
+    },
+    "dmg": {
+      "icon": false
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Game"
+    }
   }
 }
