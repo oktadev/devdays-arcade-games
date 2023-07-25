@@ -2,9 +2,9 @@ name: Build/release
 on: push
 jobs:
   release:
-    runs-on: ${{ matrix.os }}
-
+    runs-on: ${{ matrix.job.os }}
     strategy:
+      fail-fast: false
       matrix:
         job:
           - { os: "macOS-latest",   arch: "x64",    artifact_prefix: "macos"   }
