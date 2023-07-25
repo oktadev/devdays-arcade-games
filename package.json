@@ -7,8 +7,8 @@
   "scripts": {
     "start": "electron src/main.js",
     "postinstall": "electron-builder install-app-deps",
-    "build": "electron-builder --mac --windows --linux",
-    "release": "electron-builder --mac --windows --linux --publish always"
+    "build": "electron-builder --windows --linux",
+    "release": "electron-builder --windows --linux --publish always"
   },
   "author": "Deepu K Sasidharan",
   "license": "MIT",
