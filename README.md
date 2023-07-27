@@ -4,7 +4,16 @@ Custom Pacman and Space Invader games for Auth0 DevDay experience at Oktane 2023
 
 The game is written in Javascript and packaged as an [Electron](https://www.electronjs.org/) desktop app
 
-## Installing and running the game
+## Building and publishing the game binaries
+
+There is a GitHub action workflow (`.github/workflows/build.yml`) that builds and published binaries for Raspberry PI, Windows, Linux and macOS. In order to trigger e new build a new tag needs to be pushed.
+
+1. Update the `package.json` and bump the `version`. For example `3.0.0`
+2. Create a tag `git tag v3.0.0`
+3. Push teh tags `git push && git push --tags` this will trigger the build and create a new release
+4. Go to [release](https://github.com/oktadev/devdays-arcade-games/releases) and find the draft release. Edit and publish.
+
+## Installing and running the game binaries
 
 ### Raspberry PI 4
 
