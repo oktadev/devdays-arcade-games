@@ -6,11 +6,11 @@ The game is written in Javascript and packaged as an [Electron](https://www.elec
 
 ## Building and publishing the game binaries
 
-There is a GitHub action workflow (`.github/workflows/build.yml`) that builds and published binaries for Raspberry PI, Windows, Linux and macOS. In order to trigger e new build a new tag needs to be pushed.
+There is a GitHub action workflow (`.github/workflows/build.yml`) that builds and publishes binaries for Raspberry Pi, Windows, Linux and macOS. In order to trigger a new build a new tag needs to be pushed.
 
 1. Update the `package.json` and bump the `version`. For example `3.0.0`
 2. Create a tag `git tag v3.0.0`
-3. Push teh tags `git push && git push --tags` this will trigger the build and create a new release
+3. Push the tags `git push && git push --tags` this will trigger the build and create a new release
 4. Go to [release](https://github.com/oktadev/devdays-arcade-games/releases) and find the draft release. Edit and publish.
 
 ## Installing and running the game binaries
@@ -34,6 +34,8 @@ There is a GitHub action workflow (`.github/workflows/build.yml`) that builds an
 npm install
 npm start
 ```
+
+Builds can be created locally. But keep in mind that you can only build for the OS you are using. For example you cannot build for Raspberry Pi from macOS and wise versa.
 
 ### Controls
 
