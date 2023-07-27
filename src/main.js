@@ -3,10 +3,10 @@ const path = require("path");
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 1000,
-    height: 900,
-    frame: false, // Set frame to false for borderless window
-    // fullscreen: true, // Set fullscreen to true for fullscreen window
+    width: 1366,
+    height: 768,
+    frame: true, // Set frame to false for borderless window
+    fullscreen: true, // Set fullscreen to true for fullscreen window
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },

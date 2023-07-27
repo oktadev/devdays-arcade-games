@@ -23,6 +23,25 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            background-color: #000;
+        }
+
+        .auth0-logo {
+            margin-top: 50px;
+            height: 100px;
+        }
+
+        .devday-logo {
+            height: 200px;
+        }
+
+        h1 {
+            color: #fff;
+        }
+
+        .spacer {
+            height: 100px;
+            display: block;
         }
 
         .button-container {
@@ -46,11 +65,19 @@
             cursor: pointer;
             margin: 10px;
         }
+
+        .square-button:focus {
+            background-color: #1f7021;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Choose your DevDay adventure!</h1>
+    <img class="auth0-logo" src="./img/auth0-by-okta-Aeonik-white.png" />
+    <div class="spacer"></div>
+    <img class="devday-logo" src="./img/devday23-logo-white.png" />
+    <div class="spacer"></div>
+    <h1>Choose your adventure!</h1>
     <div class="button-container">
         <a class="square-button" href="pacman/pacman.html" id="pacman-btn">Pacman</a>
         <a class="square-button" href="space/space.html" id="space-btn">Space Invaders</a>
