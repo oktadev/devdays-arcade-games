@@ -5,8 +5,21 @@
   font-style: normal;
 }
 body {
-  /* background-color: dimgray; */
   text-align: center;
+  background-color: #000;
+  background-image: url("../img/hero-patterns.png");
+  background-size: 45%;
+  background-repeat: repeat-x;
+  background-position: bottom left;
+  display: flex;
+  flex-direction: column;
+  height: 768px;
+  overflow: hidden;
+}
+.devday-logo {
+  height: 68px;
+  margin-left: auto;
+  margin-right: auto;
 }
 #shim {
   font-family: BDCartoonShoutRegular;
@@ -17,7 +30,7 @@ h1 {
   font-family: BDCartoonShoutRegular;
   text-align: center;
 }
-canvas {
+
+#game-canvas {
   background-color: black;
-  border: 1px solid black;
 }

@@ -1,3 +1,26 @@
+const KEY_CODE_ENTER = "Enter";
+const KEY_CODE_SPACE = " ";
+const KEY_CODE_LEFT = "ArrowLeft";
+const KEY_CODE_RIGHT = "ArrowRight";
+const KEY_CODE_UP = "ArrowUp";
+const KEY_CODE_DOWN = "ArrowDown";
+
+const CANVAS_WIDTH = 672;
+const CANVAS_HEIGHT = 700;
+
+const Y_OFFSET = 20;
+const AVATAR_X_START = 45;
+/** A constant id of the canvas to be used as the rendering target. */
+const CANVAS_ID = "game-canvas";
+
+document.addEventListener("keydown", goBack);
+
+function goBack(event) {
+  if (event.key === "Enter") {
+    window.history.back();
+  }
+}
+
 /** A namespace for the Space Invaders game. */
 var SpaceInvaders = SpaceInvaders || {};
 
@@ -120,23 +143,21 @@ SpaceInvaders.PlayerContext = function (game) {
  * closed or whether an application execption is raised.
  */
 SpaceInvaders.Game = function () {
-  /** A constant id of the canvas to be used as the rendering target. */
-  var CANVAS_ID = "game-canvas";
   /** A constant definition for the game framerate. */
   var FPS = 1000.0 / 60.0;
 
   /** A constant for the number one keycode. */
-  this.KEY_1 = 49;
+  this.KEY_1 = KEY_CODE_UP;
   /** A constant for the number two keycode. */
-  this.KEY_2 = 50;
+  this.KEY_2 = KEY_CODE_DOWN;
   /** A constant for the right-arrow keycode. */
-  this.KEY_RIGHT = 39;
+  this.KEY_RIGHT = KEY_CODE_RIGHT;
   /** A constant for the left-arrow keycode. */
-  this.KEY_LEFT = 37;
+  this.KEY_LEFT = KEY_CODE_LEFT;
   /** A constant for the spacebar keycode. */
-  this.KEY_SPACEBAR = 32;
+  this.KEY_SPACEBAR = KEY_CODE_SPACE;
   /** A constant for the enter keycode. */
-  this.KEY_ENTER = 13;
+  this.KEY_ENTER = KEY_CODE_ENTER;
 
   /** A definition whether the game is initialized or not. */
   var initialized = false;
@@ -241,6 +262,8 @@ SpaceInvaders.Game = function () {
       console.error("Unable to find the required canvas element.");
       return false;
     }
+    canvas.width = CANVAS_WIDTH;
+    canvas.height = CANVAS_HEIGHT;
 
     // get a reference to the 2D drawing context.
     if (!(ctx = canvas.getContext("2d"))) {
@@ -290,7 +313,7 @@ SpaceInvaders.Game = function () {
       }
 
       // swipe old contents from the draw buffer and draw the scene.
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
       scene.render(ctx);
     }
 
@@ -733,7 +756,7 @@ SpaceInvaders.AvatarEntity = function (game, scene) {
 
   this.reset = function () {
     // reset the starting position of the avatar.
-    this.setX(45);
+    this.setX(AVATAR_X_START);
 
     // set avatar back to collideable and visible.
     this.setEnabled(true);
@@ -1267,7 +1290,7 @@ SpaceInvaders.WelcomeState = function (game) {
   this.game = game;
 
   var playText;
-  var nameText;
+  //   var nameText;
   var singlePlayerText;
   var multiPlayerText;
   var controlsText;
@@ -1283,32 +1306,27 @@ SpaceInvaders.WelcomeState = function (game) {
 
   // initialize the play game text.
   playText = new SpaceInvaders.TextEntity(game);
-  playText.setText("PLAY");
+  playText.setText("SPACE INVADERS");
   playText.setAlign("center");
-  playText.setX(672 / 2);
+  playText.setFillStyle("#20ff20");
+  playText.setX(CANVAS_WIDTH / 2);
   playText.setY(175);
-
-  // initialize the game name text.
-  nameText = new SpaceInvaders.TextEntity(game);
-  nameText.setText("HTML5 SPACE INVADERS");
-  nameText.setAlign("center");
-  nameText.setFillStyle("#20ff20");
-  nameText.setX(playText.getX());
-  nameText.setY(playText.getY() + 75);
 
   // initialize the single player text.
   singlePlayerText = new SpaceInvaders.TextEntity(game);
-  singlePlayerText.setText("PRESS [1] FOR A 1 PLAYER GAME");
+  singlePlayerText.setText("PRESS UP ARROW FOR A 1 PLAYER GAME");
+  singlePlayerText.setFont("20pt monospace");
   singlePlayerText.setAlign("center");
   singlePlayerText.setX(playText.getX());
-  singlePlayerText.setY(nameText.getY() + 75);
+  singlePlayerText.setY(playText.getY() + 75);
   singlePlayerText.setBlinkCount(-1);
   singlePlayerText.setBlinkFrequency(30);
   singlePlayerText.blink();
 
   // initialize the multiplayer text.
   multiPlayerText = new SpaceInvaders.TextEntity(game);
-  multiPlayerText.setText("PRESS [2] FOR A 2 PLAYER GAME");
+  multiPlayerText.setText("PRESS DOWN ARROW FOR A 2 PLAYER GAME");
+  multiPlayerText.setFont("20pt monospace");
   multiPlayerText.setAlign("center");
   multiPlayerText.setX(playText.getX());
   multiPlayerText.setY(singlePlayerText.getY() + 50);
@@ -1318,6 +1336,7 @@ SpaceInvaders.WelcomeState = function (game) {
 
   controlsText = new SpaceInvaders.TextEntity(game);
   controlsText.setText("USE ARROW KEYS AND SPACEBAR TO PLAY");
+  controlsText.setFont("20pt monospace");
   controlsText.setAlign("center");
   controlsText.setX(playText.getX());
   controlsText.setY(multiPlayerText.getY() + 75);
@@ -1399,7 +1418,7 @@ SpaceInvaders.WelcomeState = function (game) {
    */
   this.update = function (dt) {
     playText.update(dt);
-    nameText.update(dt);
+    // nameText.update(dt);
     singlePlayerText.update(dt);
     multiPlayerText.update(dt);
     controlsText.update(dt);
@@ -1412,7 +1431,7 @@ SpaceInvaders.WelcomeState = function (game) {
    */
   this.render = function (ctx) {
     playText.render(ctx);
-    nameText.render(ctx);
+    // nameText.render(ctx);
     singlePlayerText.render(ctx);
     multiPlayerText.render(ctx);
     controlsText.render(ctx);
@@ -1456,7 +1475,7 @@ SpaceInvaders.WelcomeState = function (game) {
    * @param {KeyboardEvent} e The keyboard event received from the DOM.
    */
   this.keyUp = function (e) {
-    var key = e.keyCode ? e.keyCode : e.which;
+    var key = e.key ? e.key : e.which;
     switch (key) {
       case game.KEY_1:
         game.setPlayerCount(1);
@@ -1492,7 +1511,7 @@ SpaceInvaders.PlayPlayerState = function (game) {
   text = new SpaceInvaders.TextEntity(game);
   text.setText("PLAY PLAYER<" + game.getActivePlayer() + ">");
   text.setAlign("center");
-  text.setX(672 / 2);
+  text.setX(CANVAS_WIDTH / 2);
   text.setY(400);
 
   /** *************************************************************************
@@ -1629,7 +1648,7 @@ SpaceInvaders.IngameState = function (game) {
   this.getAlienStartY = function () {
     // return the topmost alien starting y-position based on the current level.
     var level = Math.max(1, ctx.getLevel() % 10);
-    var start = 192;
+    var start = 192 - Y_OFFSET;
     if (level > 1) {
       start += 48;
     }
@@ -1652,6 +1671,8 @@ SpaceInvaders.IngameState = function (game) {
       var startRow = this.getAlienStartY();
       for (row = 0; row < 5; row++) {
         var y = startRow + 24 * 2 * row;
+        // 900 - 114
+        // 672 - 66
         var x = 66;
         for (col = 0; col < 11; col++) {
           var alien = new SpaceInvaders.AnimatedMovableSpriteEntity(game);
@@ -1686,6 +1707,8 @@ SpaceInvaders.IngameState = function (game) {
   };
 
   this.constructShields = function () {
+    const shield_y = 575 - Y_OFFSET;
+    const x_offset = 0; //100;
     shields = ctx.getShieldStates();
     if (shields == undefined) {
       var shield1 = new SpaceInvaders.Shield(game);
@@ -1694,8 +1717,8 @@ SpaceInvaders.IngameState = function (game) {
       shield1.setHeight(48);
       shield1.setClipX(293);
       shield1.setClipY(5);
-      shield1.setX(135 - shield1.getWidth() / 2);
-      shield1.setY(575);
+      shield1.setX(135 + x_offset - shield1.getWidth() / 2);
+      shield1.setY(shield_y);
 
       var shield2 = new SpaceInvaders.Shield(game);
       shield2.setImage(game.getSpriteSheet());
@@ -1703,8 +1726,8 @@ SpaceInvaders.IngameState = function (game) {
       shield2.setHeight(48);
       shield2.setClipX(293);
       shield2.setClipY(5);
-      shield2.setX(269 - shield2.getWidth() / 2);
-      shield2.setY(575);
+      shield2.setX(269 + x_offset - shield2.getWidth() / 2);
+      shield2.setY(shield_y);
 
       var shield3 = new SpaceInvaders.Shield(game);
       shield3.setImage(game.getSpriteSheet());
@@ -1712,8 +1735,8 @@ SpaceInvaders.IngameState = function (game) {
       shield3.setHeight(48);
       shield3.setClipX(293);
       shield3.setClipY(5);
-      shield3.setX(403 - shield3.getWidth() / 2);
-      shield3.setY(575);
+      shield3.setX(403 + x_offset - shield3.getWidth() / 2);
+      shield3.setY(shield_y);
 
       var shield4 = new SpaceInvaders.Shield(game);
       shield4.setImage(game.getSpriteSheet());
@@ -1721,8 +1744,8 @@ SpaceInvaders.IngameState = function (game) {
       shield4.setHeight(48);
       shield4.setClipX(293);
       shield4.setClipY(5);
-      shield4.setX(537 - shield4.getWidth() / 2);
-      shield4.setY(575);
+      shield4.setX(537 + x_offset - shield4.getWidth() / 2);
+      shield4.setY(shield_y);
 
       shields = [];
       shields.push(shield1);
@@ -1735,9 +1758,9 @@ SpaceInvaders.IngameState = function (game) {
   // initialize the green static footer line at the bottom of the screen.
   footerLine = new SpaceInvaders.SpriteEntity(game);
   footerLine.setImage(game.getSpriteSheet());
-  footerLine.setX(0);
-  footerLine.setY(717);
-  footerLine.setWidth(672);
+  footerLine.setX(0); //100
+  footerLine.setY(CANVAS_HEIGHT - 51);
+  footerLine.setWidth(CANVAS_WIDTH);
   footerLine.setHeight(3);
   footerLine.setClipX(0);
   footerLine.setClipY(117);
@@ -1747,8 +1770,8 @@ SpaceInvaders.IngameState = function (game) {
   avatar.setImage(game.getSpriteSheet());
   avatar.setWidth(40);
   avatar.setHeight(24);
-  avatar.setX(45);
-  avatar.setY(648);
+  avatar.setX(AVATAR_X_START);
+  avatar.setY(648 - Y_OFFSET);
   avatar.setVelocity(0.25);
   avatar.addAnimationFrame(86, 5, 40, 24);
   avatar.setAnimationFrameIndex(0);
@@ -1780,7 +1803,7 @@ SpaceInvaders.IngameState = function (game) {
   lifesText = new SpaceInvaders.TextEntity(game);
   lifesText.setText(lives.toString());
   lifesText.setX(27);
-  lifesText.setY(743);
+  lifesText.setY(CANVAS_HEIGHT - 15);
 
   // initialize the sprites describing the reserved lives.
   lifeSprites = [];
@@ -1790,7 +1813,7 @@ SpaceInvaders.IngameState = function (game) {
     sprite.setWidth(40);
     sprite.setHeight(24);
     sprite.setX(66 + i * 49);
-    sprite.setY(720);
+    sprite.setY(CANVAS_HEIGHT - 38);
     sprite.setClipX(85);
     sprite.setClipY(5);
     lifeSprites.push(sprite);
@@ -1802,7 +1825,7 @@ SpaceInvaders.IngameState = function (game) {
   gameOverText.setFillStyle("#f50305");
   gameOverText.setText("GAME OVER");
   gameOverText.setVisible(false);
-  gameOverText.setX(672 / 2);
+  gameOverText.setX(CANVAS_WIDTH / 2);
   gameOverText.setY(135);
 
   // initialize the text that indicates how to continue from game over.
@@ -1811,7 +1834,7 @@ SpaceInvaders.IngameState = function (game) {
   gameOverInstructions.setFillStyle("#f50305");
   gameOverInstructions.setText("PRESS ENTER TO CONTINUE");
   gameOverInstructions.setVisible(false);
-  gameOverInstructions.setX(672 / 2);
+  gameOverInstructions.setX(CANVAS_WIDTH / 2);
   gameOverInstructions.setY(gameOverText.getY() + 40);
 
   // initialize an out-of-bounds detector at the left side of the scene.
@@ -1819,20 +1842,20 @@ SpaceInvaders.IngameState = function (game) {
   leftOutOfBoundsDetector.setX(-100);
   leftOutOfBoundsDetector.setY(0);
   leftOutOfBoundsDetector.setExtentX(50);
-  leftOutOfBoundsDetector.setExtentY(768 / 2);
+  leftOutOfBoundsDetector.setExtentY(CANVAS_HEIGHT / 2);
 
   // initialize an out-of-bounds detector at the right side of the scene.
   rightOutOfBoundsDetector = new SpaceInvaders.CollideableEntity(game);
-  rightOutOfBoundsDetector.setX(672);
+  rightOutOfBoundsDetector.setX(CANVAS_WIDTH);
   rightOutOfBoundsDetector.setY(0);
   rightOutOfBoundsDetector.setExtentX(50);
-  rightOutOfBoundsDetector.setExtentY(768 / 2);
+  rightOutOfBoundsDetector.setExtentY(CANVAS_HEIGHT / 2);
 
   // initialize an out-of-bounds detector at the top of the scene.
   topOutOfBoundsDetector = new SpaceInvaders.CollideableEntity(game);
   topOutOfBoundsDetector.setX(0);
   topOutOfBoundsDetector.setY(0);
-  topOutOfBoundsDetector.setExtentX(768 / 2);
+  topOutOfBoundsDetector.setExtentX(CANVAS_HEIGHT / 2);
   topOutOfBoundsDetector.setExtentY(45);
 
   // initialize the flying saucer at the top-right of the screen.
@@ -1841,7 +1864,7 @@ SpaceInvaders.IngameState = function (game) {
   flyingSaucer.setVelocity(0.15);
   flyingSaucer.setEnabled(false);
   flyingSaucer.setVisible(false);
-  flyingSaucer.setX(672 - 43);
+  flyingSaucer.setX(CANVAS_WIDTH - 43);
   flyingSaucer.setY(115);
   flyingSaucer.setWidth(43);
   flyingSaucer.setHeight(19);
@@ -1857,14 +1880,14 @@ SpaceInvaders.IngameState = function (game) {
   alienLeftBoundsDetector.setX(-45);
   alienLeftBoundsDetector.setY(0);
   alienLeftBoundsDetector.setExtentX(45);
-  alienLeftBoundsDetector.setExtentY(768 / 2);
+  alienLeftBoundsDetector.setExtentY(CANVAS_HEIGHT / 2);
 
   // initialize the right alien director for alien and avatar movement restrictions.
   alienRightBoundsDetector = new SpaceInvaders.CollideableEntity(game);
-  alienRightBoundsDetector.setX(672 - 45);
+  alienRightBoundsDetector.setX(CANVAS_WIDTH - 45);
   alienRightBoundsDetector.setY(0);
   alienRightBoundsDetector.setExtentX(45);
-  alienRightBoundsDetector.setExtentY(768 / 2);
+  alienRightBoundsDetector.setExtentY(CANVAS_HEIGHT / 2);
 
   // ===============
   // = ALIEN SHOTS =
@@ -2175,7 +2198,7 @@ SpaceInvaders.IngameState = function (game) {
         // set saucer movement direction depending on the player shot count.
         if (avatarLaserCount % 2 == 0) {
           flyingSaucer.setDirectionX(-1);
-          flyingSaucer.setX(672 - flyingSaucer.getWidth());
+          flyingSaucer.setX(CANVAS_WIDTH - flyingSaucer.getWidth());
         } else {
           flyingSaucer.setDirectionX(1);
           flyingSaucer.setX(0);
@@ -2351,6 +2374,7 @@ SpaceInvaders.IngameState = function (game) {
    */
   this.enter = function () {
     document.addEventListener("keyup", this.keyUp);
+    document.removeEventListener("keydown", goBack);
     document.addEventListener("keydown", this.keyDown);
   };
 
@@ -2370,7 +2394,7 @@ SpaceInvaders.IngameState = function (game) {
    * @param {KeyboardEvent} e The keyboard event received from the DOM.
    */
   this.keyUp = function (e) {
-    var key = e.keyCode ? e.keyCode : e.which;
+    var key = e.key ? e.key : e.which;
     switch (key) {
       case game.KEY_LEFT:
         if (avatar.isEnabled() && avatar.getDirectionX() == -1) {
@@ -2406,6 +2430,8 @@ SpaceInvaders.IngameState = function (game) {
           var scene = game.getScene();
           var state = new SpaceInvaders.WelcomeState(game);
           scene.setState(state);
+        } else {
+          window.history.back();
         }
         break;
       }
@@ -2417,7 +2443,7 @@ SpaceInvaders.IngameState = function (game) {
    * @param {KeyboardEvent} e The keyboard event received from the DOM.
    */
   this.keyDown = function (e) {
-    var key = e.keyCode ? e.keyCode : e.which;
+    var key = e.key ? e.key : e.which;
     switch (key) {
       case game.KEY_LEFT:
         if (avatar.isEnabled()) {
@@ -2475,14 +2501,14 @@ SpaceInvaders.Scene = function (game) {
   hiScoreCaption = new SpaceInvaders.TextEntity(game);
   hiScoreCaption.setText("HI-SCORE");
   hiScoreCaption.setAlign("center");
-  hiScoreCaption.setX(672 / 2);
+  hiScoreCaption.setX(CANVAS_WIDTH / 2);
   hiScoreCaption.setY(score1Caption.getY());
 
   // initialize the static caption for the 1st player score.
   score2Caption = new SpaceInvaders.TextEntity(game);
   score2Caption.setText("SCORE<2>");
   score2Caption.setAlign("center");
-  score2Caption.setX(672 - 130);
+  score2Caption.setX(CANVAS_WIDTH - 130);
   score2Caption.setY(score1Caption.getY());
 
   // initialize the dynamic score value for the 1st player score.
