@@ -6,16 +6,16 @@ The game is written in Javascript and packaged as an [Electron](https://www.elec
 
 ## Installing and running the game
 
-### Windows
-
-1. Download the `DevDay-Arcade-Games-Setup-x.x.x.exe` file from the latest [release](https://github.com/oktadev/devdays-arcade-games/releases) to the Windows machine.
-2. Run the downloaded file
-
-### Raspberry PI 4B
+### Raspberry PI 4
 
 1. Download the `DevDay-Arcade-Games-x.x.x-armv7l.AppImage` file from the latest [release](https://github.com/oktadev/devdays-arcade-games/releases) to the Raspberry PI. Make sure to download the `armv7l` version.
 2. Run `chmod +x DevDay-Arcade-Games-x.x.x-armv7l.AppImage`
 3. Run with `./DevDay-Arcade-Games-x.x.x-armv7l.AppImage`
+
+### Windows
+
+1. Download the `DevDay-Arcade-Games-Setup-x.x.x.exe` file from the latest [release](https://github.com/oktadev/devdays-arcade-games/releases) to the Windows machine.
+2. Run the downloaded file
 
 ## Local development setup
 
@@ -43,10 +43,6 @@ The game resolution can be changed in following places
 
 - **Pacman**: Update height and width for `#pacman` in `src/ui/pacman/pacman.css`
 - **Space Invaders**: Update `CANVAS_WIDTH` & `CANVAS_HEIGHT` in `src/ui/space/space.js`
-
-### Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer).
 
 ## Credits
 
