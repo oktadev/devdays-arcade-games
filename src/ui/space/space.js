@@ -268,7 +268,7 @@ SpaceInvaders.Game = function () {
     canvas.height = CANVAS_HEIGHT;
 
     // get a reference to the 2D drawing context.
-    if (!(ctx = canvas.getContext("2d"))) {
+    if (!(ctx = canvas.getContext("2d", { willReadFrequently: true, alpha: true }))) {
       console.error("Unable to get a reference to 2D draw context.");
       return false;
     }
