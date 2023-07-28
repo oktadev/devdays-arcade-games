@@ -158,6 +158,8 @@ SpaceInvaders.Game = function () {
   this.KEY_SPACEBAR = KEY_CODE_SPACE;
   /** A constant for the enter keycode. */
   this.KEY_ENTER = KEY_CODE_ENTER;
+  /** A reference to the audio object. */
+  this.audio = undefined;
 
   /** A definition whether the game is initialized or not. */
   var initialized = false;
@@ -276,15 +278,38 @@ SpaceInvaders.Game = function () {
     spriteSheet = new Image();
     spriteSheet.src = "space_invaders_spritesheet.png";
 
+    this.audio = new SpaceInvaders.Audio();
+
     // initialize the only scene used within the application.
     scene = new SpaceInvaders.Scene(this);
 
     // construct and assign the initial welcoming state.
     scene.setState(new SpaceInvaders.WelcomeState(this));
 
-    // when the code reaches this point, the initialization succeeded.
-    initialized = true;
+    var extension = Modernizr.audio.wav ? "wav" : "mp3";
+    var audio_files = [
+      ["bang", "./audio/bang." + extension],
+      ["explosion", "./audio/explosion." + extension],
+      ["invaderkilled", "./audio/invaderkilled." + extension],
+      ["shoot", "./audio/shoot." + extension],
+    ];
+
+    this.loadAudio(audio_files, function () {
+      // when the code reaches this point, the initialization succeeded.
+      initialized = true;
+    });
     return true;
+  };
+
+  this.loadAudio = function (arr, callback) {
+    if (arr.length === 0) {
+      callback();
+    } else {
+      var x = arr.pop();
+      this.audio.load(x[0], x[1], () => {
+        this.loadAudio(arr, callback);
+      });
+    }
   };
 
   /** ***********************************************************************
@@ -737,6 +762,7 @@ SpaceInvaders.AvatarEntity = function (game, scene) {
   SpaceInvaders.AnimatedMovableSpriteEntity.call(this, game);
 
   this.explode = function () {
+    game.audio.play("explosion");
     // stop and disable the movement of the avatar.
     this.setDirectionX(0);
     this.setEnabled(false);
@@ -808,6 +834,7 @@ SpaceInvaders.AlienShotEntity = function (game, scene) {
   };
 
   this.fire = function () {
+    // game.audio.play("bang");
     var animationFrames = this.getAnimationFrames();
     if (animationFrames.length > 3) {
       animationFrames.pop();
@@ -821,6 +848,7 @@ SpaceInvaders.AlienShotEntity = function (game, scene) {
   };
 
   this.explode = function () {
+    game.audio.play("bang");
     this.addAnimationFrame(218, 5, 18, 24);
     this.setAnimationStepSize(0);
     this.setAnimationFrameIndex(3);
@@ -900,6 +928,7 @@ SpaceInvaders.Shield = function (game) {
    */
   this.preciseCollides = function (other) {
     if (this.collides(other)) {
+      game.audio.play("bang");
       // get a reference to current position and size.
       var x = this.getX();
       var y = this.getY();
@@ -1131,6 +1160,7 @@ SpaceInvaders.AvatarLaser = function (game) {
    * will also trigger a timer after which the player shot will be disabled.
    */
   this.explode = function () {
+    game.audio.play("bang");
     this.setAnimationStepSize(0);
     this.setAnimationFrameIndex(3);
     this.setEnabled(false);
@@ -2280,6 +2310,7 @@ SpaceInvaders.IngameState = function (game) {
         );
         avatarLaser.setDisappearCountdown(15);
       } else if (avatarLaser.collides(flyingSaucer)) {
+        game.audio.play("explosion");
         // hide the avatar laser shot.
         avatarLaser.setDirectionY(0);
         avatarLaser.setEnabled(false);
@@ -2300,10 +2331,10 @@ SpaceInvaders.IngameState = function (game) {
         }
         for (n = 0; n < aliens.length; n++) {
           if (avatarLaser.collides(aliens[n])) {
+            game.audio.play("explosion");
             // disable and stop the laser from further movement.
             avatarLaser.setDirectionY(0);
             avatarLaser.setEnabled(false);
-
             // make the explosion to show where the alien was at the moment of collision.
             avatarLaser.setAnimationFrameIndex(2);
             avatarLaser.setDisappearCountdown(15);
@@ -2420,6 +2451,7 @@ SpaceInvaders.IngameState = function (game) {
         break;
       case game.KEY_SPACEBAR:
         if (avatar.isEnabled() && avatarLaser.isVisible() == false) {
+          game.audio.play("shoot");
           // shoot the laser from the avatar position.
           avatarLaser.setVisible(true);
           avatarLaser.setEnabled(true);
@@ -2617,5 +2649,91 @@ SpaceInvaders.Scene = function (game) {
   };
   this.getScore2Text = function () {
     return score2Text;
+  };
+};
+
+SpaceInvaders.Audio = function () {
+  var files = [],
+    endEvents = [],
+    progressEvents = [],
+    playing = [];
+
+  function load(name, path, cb) {
+    var f = (files[name] = document.createElement("audio"));
+
+    progressEvents[name] = function (event) {
+      progress(event, name, cb);
+    };
+
+    f.addEventListener("canplaythrough", progressEvents[name], true);
+    f.setAttribute("preload", "true");
+    f.setAttribute("autobuffer", "true");
+    f.setAttribute("src", path);
+    f.pause();
+  }
+
+  function progress(event, name, callback) {
+    if (event.loaded === event.total && typeof callback === "function") {
+      callback();
+      files[name].removeEventListener(
+        "canplaythrough",
+        progressEvents[name],
+        true
+      );
+    }
+  }
+
+  function disableSound() {
+    for (var i = 0; i < playing.length; i++) {
+      files[playing[i]].pause();
+      files[playing[i]].currentTime = 0;
+    }
+    playing = [];
+  }
+
+  function ended(name) {
+    var i,
+      tmp = [],
+      found = false;
+
+    files[name].removeEventListener("ended", endEvents[name], true);
+
+    for (i = 0; i < playing.length; i++) {
+      if (!found && playing[i]) {
+        found = true;
+      } else {
+        tmp.push(playing[i]);
+      }
+    }
+    playing = tmp;
+  }
+
+  function play(name) {
+    endEvents[name] = function () {
+      ended(name);
+    };
+    playing.push(name);
+    files[name].addEventListener("ended", endEvents[name], true);
+    files[name].play();
+  }
+
+  function pause() {
+    for (var i = 0; i < playing.length; i++) {
+      files[playing[i]].pause();
+    }
+  }
+
+  function resume() {
+    for (var i = 0; i < playing.length; i++) {
+      files[playing[i]].play();
+    }
+  }
+
+  return {
+    disableSound: disableSound,
+    load: load,
+    play: play,
+    pause: pause,
+    resume: resume,
   };
 };

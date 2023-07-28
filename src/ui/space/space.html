@@ -21,10 +21,10 @@
     <script type="text/javascript" src="./space.js"></script>
     <script>
 
-        var el = document.getElementById("pacman");
+        var el = document.getElementById("game-canvas");
 
         if (Modernizr.canvas && Modernizr.localstorage &&
-            Modernizr.audio && (Modernizr.audio.ogg || Modernizr.audio.mp3)) {
+            Modernizr.audio && Modernizr.audio.wav) {
             var spaceInvaders = new SpaceInvaders.Game();
             spaceInvaders.start();
         } else {
