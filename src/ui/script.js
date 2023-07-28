@@ -14,18 +14,27 @@
 const buttons = document.querySelectorAll(".square-button");
 let currentIndex = 0;
 
+const KEY_CODE_ENTER = "Enter";
+const KEY_CODE_LEFT = "ArrowLeft";
+const KEY_CODE_RIGHT = "ArrowRight";
+
 // Add event listener for arrow keys
 document.addEventListener("keydown", (event) => {
-  if (event.key === "ArrowRight") {
+  const key = event.code;
+  if (key === KEY_CODE_RIGHT) {
     currentIndex = (currentIndex + 1) % buttons.length;
     buttons[currentIndex].focus();
-  } else if (event.key === "ArrowLeft") {
+  } else if (key === KEY_CODE_LEFT) {
     currentIndex = (currentIndex - 1 + buttons.length) % buttons.length;
     buttons[currentIndex].focus();
-  } else if (event.key === "Enter") {
+  } else if (key === KEY_CODE_ENTER) {
     buttons[currentIndex].click();
   }
 });
+
+document.getElementById("key-left").innerText = KEY_CODE_LEFT;
+document.getElementById("key-right").innerText = KEY_CODE_RIGHT;
+document.getElementById("key-enter").innerText = KEY_CODE_ENTER;
 
 // Set initial focus on the first button
 buttons[currentIndex].focus();

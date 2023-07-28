@@ -1,5 +1,5 @@
 const KEY_CODE_ENTER = "Enter";
-const KEY_CODE_SPACE = " ";
+const KEY_CODE_SPACE = "Space";
 const KEY_CODE_LEFT = "ArrowLeft";
 const KEY_CODE_RIGHT = "ArrowRight";
 const KEY_CODE_UP = "ArrowUp";
@@ -1155,7 +1155,7 @@ SpaceInvaders.TextEntity = function (game) {
   /** A constant default fill style (i.e. color) for the text. */
   this.DEFAULT_FILL_STYLE = "white";
   /** A constant default font definition for the text. */
-  this.DEFAULT_FONT = "24pt monospace";
+  this.DEFAULT_FONT = "18pt BDCartoonShoutRegular";
   /** A constant default text alignment for the rendering. */
   this.DEFAULT_ALIGN = "start";
   /** A constant default visibility state for the text. */
@@ -1294,6 +1294,7 @@ SpaceInvaders.WelcomeState = function (game) {
   var singlePlayerText;
   var multiPlayerText;
   var controlsText;
+  var controlsText2;
   var tableCaptionText;
   var tableRow1Sprite;
   var tableRow1Text;
@@ -1314,9 +1315,10 @@ SpaceInvaders.WelcomeState = function (game) {
 
   // initialize the single player text.
   singlePlayerText = new SpaceInvaders.TextEntity(game);
-  singlePlayerText.setText("PRESS UP ARROW FOR A 1 PLAYER GAME");
-  singlePlayerText.setFont("20pt monospace");
+  singlePlayerText.setText(`PRESS ${KEY_CODE_UP} FOR A 1 PLAYER GAME`);
+  singlePlayerText.setFont("16pt BDCartoonShoutRegular");
   singlePlayerText.setAlign("center");
+  singlePlayerText.setFillStyle("#FFFF00");
   singlePlayerText.setX(playText.getX());
   singlePlayerText.setY(playText.getY() + 75);
   singlePlayerText.setBlinkCount(-1);
@@ -1325,9 +1327,10 @@ SpaceInvaders.WelcomeState = function (game) {
 
   // initialize the multiplayer text.
   multiPlayerText = new SpaceInvaders.TextEntity(game);
-  multiPlayerText.setText("PRESS DOWN ARROW FOR A 2 PLAYER GAME");
-  multiPlayerText.setFont("20pt monospace");
+  multiPlayerText.setText(`PRESS ${KEY_CODE_DOWN} FOR A 2 PLAYER GAME`);
+  multiPlayerText.setFont("16pt BDCartoonShoutRegular");
   multiPlayerText.setAlign("center");
+  multiPlayerText.setFillStyle("#FFFF00");
   multiPlayerText.setX(playText.getX());
   multiPlayerText.setY(singlePlayerText.getY() + 50);
   multiPlayerText.setBlinkCount(-1);
@@ -1335,18 +1338,25 @@ SpaceInvaders.WelcomeState = function (game) {
   multiPlayerText.blink();
 
   controlsText = new SpaceInvaders.TextEntity(game);
-  controlsText.setText("USE ARROW KEYS AND SPACEBAR TO PLAY");
-  controlsText.setFont("20pt monospace");
+  controlsText.setText(`USE ARROW KEYS AND ${KEY_CODE_SPACE} TO PLAY`);
+  controlsText.setFont("16pt BDCartoonShoutRegular");
   controlsText.setAlign("center");
   controlsText.setX(playText.getX());
-  controlsText.setY(multiPlayerText.getY() + 75);
+  controlsText.setY(multiPlayerText.getY() + 50);
+
+  controlsText2 = new SpaceInvaders.TextEntity(game);
+  controlsText2.setText(`PRESS ${KEY_CODE_ENTER} TO GO BACK TO SELECTION`);
+  controlsText2.setFont("16pt BDCartoonShoutRegular");
+  controlsText2.setAlign("center");
+  controlsText2.setX(playText.getX());
+  controlsText2.setY(controlsText.getY() + 50);
 
   // initiailize the score advance table text.
   tableCaptionText = new SpaceInvaders.TextEntity(game);
   tableCaptionText.setText("-- SCORE ADVANCE TABLE --");
   tableCaptionText.setAlign("center");
   tableCaptionText.setX(playText.getX());
-  tableCaptionText.setY(controlsText.getY() + 75);
+  tableCaptionText.setY(controlsText2.getY() + 75);
 
   // initialize the 1st table row sprite image.
   tableRow1Sprite = new SpaceInvaders.SpriteEntity(game);
@@ -1422,6 +1432,7 @@ SpaceInvaders.WelcomeState = function (game) {
     singlePlayerText.update(dt);
     multiPlayerText.update(dt);
     controlsText.update(dt);
+    controlsText2.update(dt);
     tableCaptionText.update(dt);
   };
 
@@ -1435,6 +1446,7 @@ SpaceInvaders.WelcomeState = function (game) {
     singlePlayerText.render(ctx);
     multiPlayerText.render(ctx);
     controlsText.render(ctx);
+    controlsText2.render(ctx);
     tableCaptionText.render(ctx);
 
     // render score advance table row sprites.
@@ -1475,7 +1487,7 @@ SpaceInvaders.WelcomeState = function (game) {
    * @param {KeyboardEvent} e The keyboard event received from the DOM.
    */
   this.keyUp = function (e) {
-    var key = e.key ? e.key : e.which;
+    var key = e.code ? e.code : e.key;
     switch (key) {
       case game.KEY_1:
         game.setPlayerCount(1);
@@ -1832,7 +1844,7 @@ SpaceInvaders.IngameState = function (game) {
   gameOverInstructions = new SpaceInvaders.TextEntity(game);
   gameOverInstructions.setAlign("center");
   gameOverInstructions.setFillStyle("#f50305");
-  gameOverInstructions.setText("PRESS ENTER TO CONTINUE");
+  gameOverInstructions.setText(`PRESS ${KEY_CODE_ENTER} TO CONTINUE`);
   gameOverInstructions.setVisible(false);
   gameOverInstructions.setX(CANVAS_WIDTH / 2);
   gameOverInstructions.setY(gameOverText.getY() + 40);
@@ -2394,7 +2406,7 @@ SpaceInvaders.IngameState = function (game) {
    * @param {KeyboardEvent} e The keyboard event received from the DOM.
    */
   this.keyUp = function (e) {
-    var key = e.key ? e.key : e.which;
+    var key = e.code ? e.code : e.key;
     switch (key) {
       case game.KEY_LEFT:
         if (avatar.isEnabled() && avatar.getDirectionX() == -1) {
@@ -2443,7 +2455,7 @@ SpaceInvaders.IngameState = function (game) {
    * @param {KeyboardEvent} e The keyboard event received from the DOM.
    */
   this.keyDown = function (e) {
-    var key = e.key ? e.key : e.which;
+    var key = e.code ? e.code : e.key;
     switch (key) {
       case game.KEY_LEFT:
         if (avatar.isEnabled()) {

@@ -8,7 +8,7 @@
  * do proper ghost mechanics (blinky/wimpy etc)
  */
 const KEY_CODE_ENTER = "Enter";
-const KEY_CODE_SPACE = " ";
+const KEY_CODE_SPACE = "Space";
 const KEY_CODE_LEFT = "ArrowLeft";
 const KEY_CODE_RIGHT = "ArrowRight";
 const KEY_CODE_UP = "ArrowUp";
@@ -18,8 +18,8 @@ const SCORE_COLOR = "#FFFFFF";
 const USER_COLOR = "#3F59E4"; //"#FFFF00";
 const DIALOG_COLOR = "#14f507"; //"#FFFF00";
 const FOOTER_COLOR = "#14f507"; //"#FFFF00";
-const WALL_COLOR = "#f5f7c1"; //"#0000FF";
-const BISCUIT_COLOR = "#FFF";
+const WALL_COLOR = "#fff"; //"#0000FF";
+const BISCUIT_COLOR = "#f5f7c1";
 const PILL_COLOR = "#35f02b";
 const BG_COLOR = "#000";
 const GHOST_EATEN_COLOR = "#222";
@@ -365,8 +365,8 @@ Pacman.User = function (game, map) {
   }
 
   function keyDown(e) {
-    if (typeof keyMap[e.key] !== "undefined") {
-      due = keyMap[e.key];
+    if (typeof keyMap[e.code] !== "undefined") {
+      due = keyMap[e.code];
       e.preventDefault();
       e.stopPropagation();
       return false;
@@ -878,12 +878,12 @@ var PACMAN = (function () {
     );
   }
 
-  function dialog(text) {
+  function dialog(text, height = map.height * 9 + 14) {
     ctx.fillStyle = DIALOG_COLOR;
     ctx.font = "14px BDCartoonShoutRegular";
     var width = ctx.measureText(text).width,
       x = (map.width * map.blockSize - width) / 2;
-    ctx.fillText(text, x, map.height * 10 + 8);
+    ctx.fillText(text, x, height);
   }
 
   function soundDisabled() {
@@ -910,7 +910,7 @@ var PACMAN = (function () {
   }
 
   function keyDown(e) {
-    const key = e.key;
+    const key = e.code;
     if (key === KEY.SPACEBAR) {
       startNewGame();
     } else if (key === KEY.ENTER) {
@@ -1054,7 +1054,11 @@ var PACMAN = (function () {
     } else if (state === WAITING && stateChanged) {
       stateChanged = false;
       map.draw(ctx);
-      dialog("Press SPACE to start a New game");
+      dialog(`Press ${KEY_CODE_SPACE} to start a New game`);
+      dialog(
+        `Press ${KEY_CODE_ENTER} to go back to selection`,
+        map.height * 10 + 25
+      );
     } else if (state === EATEN_PAUSE && tick - timerStart > Pacman.FPS / 3) {
       map.draw(ctx);
       setState(PLAYING);
@@ -1192,8 +1196,8 @@ const KEY = {
   ARROW_UP: KEY_CODE_UP,
   ARROW_RIGHT: KEY_CODE_RIGHT,
   ARROW_DOWN: KEY_CODE_DOWN,
-  S: "s",
-  P: "p",
+  S: "KeyS",
+  P: "KeyP",
 };
 
 Pacman.WALL = 0;

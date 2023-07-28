@@ -69,6 +69,17 @@
         .square-button:focus {
             background-color: #1f7021;
         }
+
+        .kbd {
+            background-color: bisque;
+            color: #000;
+            padding: 2px 5px;
+        }
+
+        .note {
+            font-size: 12px;
+            color: #fff;
+        }
     </style>
 </head>
 
@@ -78,6 +89,7 @@
     <img class="devday-logo" src="./img/devday23-logo-white.png" />
     <div class="spacer"></div>
     <h1>Choose your adventure!</h1>
+    <p class="note">Navigate with <span class="kbd" id="key-left"></span> &amp; <span class="kbd" id="key-right"></span>. Select with <span class="kbd" id="key-enter"></span></p>
     <div class="button-container">
         <a class="square-button" href="pacman/pacman.html" id="pacman-btn">Pacman</a>
         <a class="square-button" href="space/space.html" id="space-btn">Space Invaders</a>

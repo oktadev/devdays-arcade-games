@@ -10,7 +10,7 @@ body {
   background-image: url("../img/hero-patterns.png");
   background-size: 45%;
   background-repeat: repeat-x;
-  background-position: bottom left;
+  background-position: 246px 160px;
   display: flex;
   flex-direction: column;
   height: 768px;
