@@ -14,6 +14,18 @@ const KEY_CODE_RIGHT = "ArrowRight";
 const KEY_CODE_UP = "ArrowUp";
 const KEY_CODE_DOWN = "ArrowDown";
 
+const SCORE_COLOR = "#FFFFFF";
+const USER_COLOR = "#3F59E4"; //"#FFFF00";
+const DIALOG_COLOR = "#14f507"; //"#FFFF00";
+const FOOTER_COLOR = "#14f507"; //"#FFFF00";
+const WALL_COLOR = "#f5f7c1"; //"#0000FF";
+const BISCUIT_COLOR = "#FFF";
+const PILL_COLOR = "#35f02b";
+const BG_COLOR = "#000";
+const GHOST_EATEN_COLOR = "#222";
+const GHOST_EATABLE_COLOR = "#FFFF00"; // "#0000BB"
+const GHOST_EATABLE_END_COLOR = "#FFFFFF";
+
 const NONE = 4,
   UP = 3,
   LEFT = 2,
@@ -27,8 +39,8 @@ const NONE = 4,
   DYING = 10,
   Pacman = {};
 
-// game speed
-Pacman.FPS = 30;
+// game speed. Reduce if game is too difficult
+Pacman.FPS = 24;
 
 Pacman.Ghost = function (game, map, colour) {
   var position = null,
@@ -137,12 +149,14 @@ Pacman.Ghost = function (game, map, colour) {
   function getColour() {
     if (eatable) {
       if (secondsAgo(eatable) > 5) {
-        return game.getTick() % 20 > 10 ? "#FFFFFF" : "#0000BB";
+        return game.getTick() % 20 > 10
+          ? GHOST_EATABLE_END_COLOR
+          : GHOST_EATABLE_COLOR;
       } else {
-        return "#0000BB";
+        return GHOST_EATABLE_COLOR;
       }
     } else if (eaten) {
-      return "#222";
+      return GHOST_EATEN_COLOR;
     }
     return colour;
   }
@@ -200,7 +214,7 @@ Pacman.Ghost = function (game, map, colour) {
     off[DOWN] = [0, f];
 
     ctx.beginPath();
-    ctx.fillStyle = "#000";
+    ctx.fillStyle = BG_COLOR;
     ctx.arc(
       left + 6 + off[direction][0],
       top + 6 + off[direction][1],
@@ -498,7 +512,7 @@ Pacman.User = function (game, map) {
       return;
     }
 
-    ctx.fillStyle = "#FFFF00";
+    ctx.fillStyle = USER_COLOR;
     ctx.beginPath();
     ctx.moveTo(
       (position.x / 10) * size + half,
@@ -521,7 +535,7 @@ Pacman.User = function (game, map) {
     var s = map.blockSize,
       angle = calcAngle(direction, position);
 
-    ctx.fillStyle = "#FFFF00";
+    ctx.fillStyle = USER_COLOR;
 
     ctx.beginPath();
 
@@ -531,6 +545,20 @@ Pacman.User = function (game, map) {
       (position.x / 10) * s + s / 2,
       (position.y / 10) * s + s / 2,
       s / 2,
+      Math.PI * angle.start,
+      Math.PI * angle.end,
+      angle.direction
+    );
+    ctx.fill();
+
+    ctx.fillStyle = BG_COLOR;
+    ctx.beginPath();
+
+    ctx.moveTo((position.x / 10) * s + s / 2, (position.y / 10) * s + s / 2);
+    ctx.arc(
+      (position.x / 10) * s + s / 2,
+      (position.y / 10) * s + s / 2,
+      s / 4,
       Math.PI * angle.start,
       Math.PI * angle.end,
       angle.direction
@@ -587,7 +615,7 @@ Pacman.Map = function (size) {
   function drawWall(ctx) {
     var i, j, p, line;
 
-    ctx.strokeStyle = "#0000FF";
+    ctx.strokeStyle = WALL_COLOR;
     ctx.lineWidth = 5;
     ctx.lineCap = "round";
 
@@ -639,10 +667,10 @@ Pacman.Map = function (size) {
         if (map[i][j] === Pacman.PILL) {
           ctx.beginPath();
 
-          ctx.fillStyle = "#000";
+          ctx.fillStyle = BG_COLOR;
           ctx.fillRect(j * blockSize, i * blockSize, blockSize, blockSize);
 
-          ctx.fillStyle = "#FFF";
+          ctx.fillStyle = PILL_COLOR;
           ctx.arc(
             j * blockSize + blockSize / 2,
             i * blockSize + blockSize / 2,
@@ -663,7 +691,7 @@ Pacman.Map = function (size) {
       j,
       size = blockSize;
 
-    ctx.fillStyle = "#000";
+    ctx.fillStyle = BG_COLOR;
     ctx.fillRect(0, 0, width * size, height * size);
 
     drawWall(ctx);
@@ -689,16 +717,23 @@ Pacman.Map = function (size) {
       layout === Pacman.BLOCK ||
       layout === Pacman.BISCUIT
     ) {
-      ctx.fillStyle = "#000";
+      ctx.fillStyle = BG_COLOR;
       ctx.fillRect(x * blockSize, y * blockSize, blockSize, blockSize);
 
       if (layout === Pacman.BISCUIT) {
-        ctx.fillStyle = "#FFF";
-        ctx.fillRect(
-          x * blockSize + blockSize / 2.5,
-          y * blockSize + blockSize / 2.5,
-          blockSize / 6,
-          blockSize / 6
+        ctx.fillStyle = BISCUIT_COLOR;
+        // ctx.fillRect(
+        //   x * blockSize + blockSize / 2.5,
+        //   y * blockSize + blockSize / 2.5,
+        //   blockSize / 6,
+        //   blockSize / 6
+        // );
+        // draw a key instead of a circle
+        ctx.font = "12px FontAwesome";
+        ctx.fillText(
+          "\uf084",
+          x * blockSize + blockSize / 3,
+          y * blockSize + blockSize / 1.5
         );
       }
     }
@@ -834,7 +869,7 @@ var PACMAN = (function () {
   }
 
   function drawScore(text, position) {
-    ctx.fillStyle = "#FFFFFF";
+    ctx.fillStyle = SCORE_COLOR;
     ctx.font = "12px BDCartoonShoutRegular";
     ctx.fillText(
       text,
@@ -844,7 +879,7 @@ var PACMAN = (function () {
   }
 
   function dialog(text) {
-    ctx.fillStyle = "#FFFF00";
+    ctx.fillStyle = DIALOG_COLOR;
     ctx.font = "14px BDCartoonShoutRegular";
     var width = ctx.measureText(text).width,
       x = (map.width * map.blockSize - width) / 2;
@@ -923,13 +958,13 @@ var PACMAN = (function () {
     var topLeft = map.height * map.blockSize,
       textBase = topLeft + 20;
 
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = BG_COLOR;
     ctx.fillRect(0, topLeft, map.width * map.blockSize, 30);
 
-    ctx.fillStyle = "#FFFF00";
+    // ctx.fillStyle = FOOTER_COLOR;
 
     for (var i = 0, len = user.getLives(); i < len; i++) {
-      ctx.fillStyle = "#FFFF00";
+      ctx.fillStyle = USER_COLOR;
       ctx.beginPath();
       ctx.moveTo(
         150 + 25 * i + map.blockSize / 2,
@@ -952,7 +987,7 @@ var PACMAN = (function () {
     // //ctx.fillText("♪", 10, textBase);
     // ctx.fillText("s", 10, textBase);
 
-    ctx.fillStyle = "#FFFF00";
+    ctx.fillStyle = FOOTER_COLOR;
     ctx.font = "14px BDCartoonShoutRegular";
     ctx.fillText("Score: " + user.theScore(), 20, textBase);
     ctx.fillText("Level: " + level, 260, textBase);
