@@ -1,7 +1,7 @@
 {
   "name": "devdays-arcade-games",
   "productName": "Devdays-arcade-games",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Custom Pacman and Space Invaders game",
   "main": "src/main.js",
   "scripts": {
