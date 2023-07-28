@@ -16,7 +16,7 @@ const CANVAS_ID = "game-canvas";
 document.addEventListener("keydown", goBack);
 
 function goBack(event) {
-  if (event.key === "Enter") {
+  if (event.code === KEY_CODE_ENTER) {
     window.history.back();
   }
 }
@@ -2416,8 +2416,8 @@ SpaceInvaders.IngameState = function (game) {
    * for a first time. This makes it an ideal place to put all listener logic.
    */
   this.enter = function () {
-    document.addEventListener("keyup", this.keyUp);
     document.removeEventListener("keydown", goBack);
+    document.addEventListener("keyup", this.keyUp);
     document.addEventListener("keydown", this.keyDown);
   };
 
@@ -2430,6 +2430,7 @@ SpaceInvaders.IngameState = function (game) {
   this.exit = function () {
     document.removeEventListener("keyup", this.keyUp);
     document.removeEventListener("keydown", this.keyDown);
+    document.addEventListener("keydown", goBack);
   };
 
   /** *************************************************************************
@@ -2465,18 +2466,14 @@ SpaceInvaders.IngameState = function (game) {
         }
         break;
       case game.KEY_ENTER: {
-        if (gameOverText.isVisible()) {
-          // reset game context before returning to welcome scene.
-          game.getPlayer1Context().reset();
-          game.getPlayer2Context().reset();
+        // reset game context before returning to welcome scene.
+        game.getPlayer1Context().reset();
+        game.getPlayer2Context().reset();
 
-          // return back to the welcome scene.
-          var scene = game.getScene();
-          var state = new SpaceInvaders.WelcomeState(game);
-          scene.setState(state);
-        } else {
-          window.history.back();
-        }
+        // return back to the welcome scene.
+        var scene = game.getScene();
+        var state = new SpaceInvaders.WelcomeState(game);
+        scene.setState(state);
         break;
       }
     }
