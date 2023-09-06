@@ -9,9 +9,10 @@ The game is written in JavaScript and packaged as an [Electron](https://www.elec
 There is a GitHub action workflow (`.github/workflows/build.yml`) that builds and publishes binaries for Raspberry Pi, Windows, Linux and macOS. In order to trigger a new build a new tag needs to be pushed.
 
 1. Update the `package.json` and bump the `version`. For example `3.0.0`
-2. Create a tag `git tag v3.0.0`
-3. Push the tags `git push && git push --tags` this will trigger the build and create a new release
-4. Go to [release](https://github.com/oktadev/devdays-arcade-games/releases) and find the draft release. Edit and publish.
+2. Run `npm install` to update `package-lock.json` 
+3. Create a tag `git tag v3.0.0`
+4. Push the tags `git push && git push --tags` this will trigger the build and create a new release
+5. Go to [release](https://github.com/oktadev/devdays-arcade-games/releases) and find the draft release. Edit and publish.
 
 ## Installing and running the game binaries
 
