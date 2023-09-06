@@ -16,7 +16,7 @@
   "author": "Deepu K Sasidharan",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^26.1.0",
+    "electron": "^16",
     "electron-builder": "^24.6.4"
   },
   "build": {
