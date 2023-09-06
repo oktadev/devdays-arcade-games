@@ -1,9 +1,13 @@
 const KEY_CODE_ENTER = "Enter";
+const KEY_CODE_ENTER_TEXT = "Blue button";
 const KEY_CODE_SPACE = "Space";
+const KEY_CODE_SPACE_TEXT = "Red Button";
 const KEY_CODE_LEFT = "ArrowLeft";
 const KEY_CODE_RIGHT = "ArrowRight";
 const KEY_CODE_UP = "ArrowUp";
+const KEY_CODE_UP_TEXT = "Up";
 const KEY_CODE_DOWN = "ArrowDown";
+const KEY_CODE_DOWN_TEXT = "Down";
 
 const CANVAS_WIDTH = 672;
 const CANVAS_HEIGHT = 700;
@@ -1345,7 +1349,7 @@ SpaceInvaders.WelcomeState = function (game) {
 
   // initialize the single player text.
   singlePlayerText = new SpaceInvaders.TextEntity(game);
-  singlePlayerText.setText(`PRESS ${KEY_CODE_UP} FOR A 1 PLAYER GAME`);
+  singlePlayerText.setText(`USE ${KEY_CODE_UP_TEXT} FOR A 1 PLAYER GAME`);
   singlePlayerText.setFont("16pt BDCartoonShoutRegular");
   singlePlayerText.setAlign("center");
   singlePlayerText.setFillStyle("#FFFF00");
@@ -1357,7 +1361,7 @@ SpaceInvaders.WelcomeState = function (game) {
 
   // initialize the multiplayer text.
   multiPlayerText = new SpaceInvaders.TextEntity(game);
-  multiPlayerText.setText(`PRESS ${KEY_CODE_DOWN} FOR A 2 PLAYER GAME`);
+  multiPlayerText.setText(`USE ${KEY_CODE_DOWN_TEXT} FOR A 2 PLAYER GAME`);
   multiPlayerText.setFont("16pt BDCartoonShoutRegular");
   multiPlayerText.setAlign("center");
   multiPlayerText.setFillStyle("#FFFF00");
@@ -1368,14 +1372,14 @@ SpaceInvaders.WelcomeState = function (game) {
   multiPlayerText.blink();
 
   controlsText = new SpaceInvaders.TextEntity(game);
-  controlsText.setText(`USE ARROW KEYS AND ${KEY_CODE_SPACE} TO PLAY`);
+  controlsText.setText(`USE JOYSTICK AND ${KEY_CODE_SPACE_TEXT} TO PLAY`);
   controlsText.setFont("16pt BDCartoonShoutRegular");
   controlsText.setAlign("center");
   controlsText.setX(playText.getX());
   controlsText.setY(multiPlayerText.getY() + 50);
 
   controlsText2 = new SpaceInvaders.TextEntity(game);
-  controlsText2.setText(`PRESS ${KEY_CODE_ENTER} TO GO BACK TO SELECTION`);
+  controlsText2.setText(`PRESS ${KEY_CODE_ENTER_TEXT} TO GO BACK TO SELECTION`);
   controlsText2.setFont("16pt BDCartoonShoutRegular");
   controlsText2.setAlign("center");
   controlsText2.setX(playText.getX());

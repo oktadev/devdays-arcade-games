@@ -8,7 +8,9 @@
  * do proper ghost mechanics (blinky/wimpy etc)
  */
 const KEY_CODE_ENTER = "Enter";
+const KEY_CODE_ENTER_TEXT = "Blue button";
 const KEY_CODE_SPACE = "Space";
+const KEY_CODE_SPACE_TEXT = "Red button";
 const KEY_CODE_LEFT = "ArrowLeft";
 const KEY_CODE_RIGHT = "ArrowRight";
 const KEY_CODE_UP = "ArrowUp";
@@ -1054,9 +1056,9 @@ var PACMAN = (function () {
     } else if (state === WAITING && stateChanged) {
       stateChanged = false;
       map.draw(ctx);
-      dialog(`Press ${KEY_CODE_SPACE} to start a New game`);
+      dialog(`Press ${KEY_CODE_SPACE_TEXT} to start a New game`);
       dialog(
-        `Press ${KEY_CODE_ENTER} to go back to selection`,
+        `Press ${KEY_CODE_ENTER_TEXT} to go back to selection`,
         map.height * 10 + 25
       );
     } else if (state === EATEN_PAUSE && tick - timerStart > Pacman.FPS / 3) {

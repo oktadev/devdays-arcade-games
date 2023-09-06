@@ -15,8 +15,11 @@ const buttons = document.querySelectorAll(".square-button");
 let currentIndex = 0;
 
 const KEY_CODE_ENTER = "Enter";
+const KEY_CODE_ENTER_TEXT = "Blue button";
 const KEY_CODE_LEFT = "ArrowLeft";
+const KEY_CODE_LEFT_TEXT = "Left";
 const KEY_CODE_RIGHT = "ArrowRight";
+const KEY_CODE_RIGHT_TEXT = "Right";
 
 // Add event listener for arrow keys
 document.addEventListener("keydown", (event) => {
@@ -32,9 +35,9 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-document.getElementById("key-left").innerText = KEY_CODE_LEFT;
-document.getElementById("key-right").innerText = KEY_CODE_RIGHT;
-document.getElementById("key-enter").innerText = KEY_CODE_ENTER;
+document.getElementById("key-left").innerText = KEY_CODE_LEFT_TEXT;
+document.getElementById("key-right").innerText = KEY_CODE_RIGHT_TEXT;
+document.getElementById("key-enter").innerText = KEY_CODE_ENTER_TEXT;
 
 // Set initial focus on the first button
 buttons[currentIndex].focus();
