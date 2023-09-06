@@ -1,8 +1,8 @@
 # Auth0 by Okta - DevDay Arcade Games
 
-Custom Pacman and Space Invader games for Auth0 DevDay experience at Oktane 2023
+Custom Pacman and Space Invader games for Auth0 DevDay experience at Oktane 2023.
 
-The game is written in Javascript and packaged as an [Electron](https://www.electronjs.org/) desktop app
+The game is written in JavaScript and packaged as an [Electron](https://www.electronjs.org/) desktop app.
 
 ## Building and publishing the game binaries
 
@@ -17,9 +17,10 @@ There is a GitHub action workflow (`.github/workflows/build.yml`) that builds an
 
 ### Raspberry PI 4
 
-1. Download the `DevDay-Arcade-Games-x.x.x-armv7l.AppImage` file from the latest [release](https://github.com/oktadev/devdays-arcade-games/releases) to the Raspberry PI. Make sure to download the `armv7l` version.
-2. Run `chmod +x DevDay-Arcade-Games-x.x.x-armv7l.AppImage`
-3. Run with `./DevDay-Arcade-Games-x.x.x-armv7l.AppImage`
+1. Download the `DevDay-Arcade-Games-x.x.x-arm64.AppImage` file from the latest [release](https://github.com/oktadev/devdays-arcade-games/releases) to the Raspberry PI. Make sure to download the `arm64` version.
+2. Run `chmod +x DevDay-Arcade-Games-x.x.x-arm64.AppImage`
+3. Install FUSE: `sudo apt-get install libfuse2`
+4. Run with `./DevDay-Arcade-Games-x.x.x-arm64.AppImage`
 
 ### Windows
 
@@ -35,7 +36,7 @@ npm install
 npm start
 ```
 
-Builds can be created locally. But keep in mind that you can only build for the OS you are using. For example you cannot build for Raspberry Pi from macOS and wise versa.
+Builds can be created locally. But keep in mind that you can only build for the OS you are using. For example, you cannot build for Raspberry Pi from macOS and vise versa.
 
 ### Controls
 
