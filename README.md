@@ -20,13 +20,8 @@ There is a GitHub action workflow (`.github/workflows/build.yml`) that builds an
 
 1. Download the `DevDay-Arcade-Games-x.x.x-arm64.AppImage` file from the latest [release](https://github.com/oktadev/devdays-arcade-games/releases) to the Raspberry PI. Make sure to download the `arm64` version.
 2. Run `chmod +x DevDay-Arcade-Games-x.x.x-arm64.AppImage`
-3. Start the games with `./DevDay-Arcade-Games-x.x.x-arm64.AppImage`
-
-NOTE: If you run into issues, you may need to install FUSE:
-
-```
-sudo apt-get install libfuse2
-```
+3. Install FUSE: `sudo apt-get install libfuse2`
+4. Start the games with `./DevDay-Arcade-Games-x.x.x-arm64.AppImage`
 
 ### Windows
 
