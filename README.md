@@ -12,20 +12,20 @@ There is a GitHub action workflow (`.github/workflows/build.yml`) that builds an
 2. Run `npm install` to update `package-lock.json` 
 3. Create a tag `git tag v3.0.0`
 4. Push the tags `git push && git push --tags` this will trigger the build and create a new release
-5. Go to [release](https://github.com/oktadev/devdays-arcade-games/releases) and find the draft release. Edit and publish.
+5. Go to [release](https://github.com/auth0-developer-hub/devdays-arcade-games/releases) and find the draft release. Edit and publish.
 
 ## Installing and running the game binaries
 
 ### Raspberry PI 4
 
-1. Download the `DevDay-Arcade-Games-x.x.x-arm64.AppImage` file from the latest [release](https://github.com/oktadev/devdays-arcade-games/releases) to the Raspberry PI. Make sure to download the `arm64` version.
+1. Download the `DevDay-Arcade-Games-x.x.x-arm64.AppImage` file from the latest [release](https://github.com/auth0-developer-hub/devdays-arcade-games/releases) to the Raspberry PI. Make sure to download the `arm64` version.
 2. Run `chmod +x DevDay-Arcade-Games-x.x.x-arm64.AppImage`
 3. Install FUSE: `sudo apt-get install libfuse2`
 4. Start the games with `./DevDay-Arcade-Games-x.x.x-arm64.AppImage`
 
 ### Windows
 
-1. Download the `DevDay-Arcade-Games-Setup-x.x.x.exe` file from the latest [release](https://github.com/oktadev/devdays-arcade-games/releases) to the Windows machine.
+1. Download the `DevDay-Arcade-Games-Setup-x.x.x.exe` file from the latest [release](https://github.com/auth0-developer-hub/devdays-arcade-games/releases) to the Windows machine.
 2. Run the downloaded file.
 
 ## Local development setup
@@ -37,7 +37,7 @@ npm install
 npm start
 ```
 
-Builds can be created locally. But keep in mind that you can only build for the OS you are using. For example, you cannot build for Raspberry Pi from macOS and vise versa.
+Builds can be created locally. But keep in mind that you can only build for the OS you are using. For example, you cannot build for Raspberry Pi from macOS and vice versa.
 
 ### Controls
 
@@ -71,7 +71,7 @@ The most difficult part of setting up the TV is creating a Roku account. This is
 
 ### Raspberry Pi
 
-Connect the Raspberry Pi into the HDMI 1 port on the TV and connected the power cable. You can use the included keyboard and mouse to connect to the WiFi and update the OS. Configure the username and password as you see fit. Using the default login credentials included with the kit will make it easier for others to set up.
+Connect the Raspberry Pi to the HDMI 1 port on the TV and connect the power cable. You can use the included keyboard and mouse to connect to the WiFi and update the OS. Configure the username and password as you see fit. Using the default login credentials included with the kit will make it easier for others to set up.
 
 Follow the [Raspberry Pi 4 instructions](#raspberry-pi-4) to run the game. Blue button = Enter, Red button = Spacebar. 
 
@@ -81,9 +81,9 @@ NOTE: If you need to start from scratch, you can use the [Raspberry Pi Imager](h
 
 ### Joysticks and Buttons
 
-The joysticks have a 5-pin connector that needs to be connected to the USB joystick board. There is a 4-pin connector on the end of a USB cable that plugs into a Raspberry Pi USB port. 
+The joysticks have a 5-pin connector that needs to be connected to the USB joystick board. A 4-pin connector on the end of a USB cable plugs into a Raspberry Pi USB port. 
 
-The buttons have a 2-pin connector that needs to be connected to the USB joystick board. Below is a photo of the connectors. You might notice that the blue button is connected to the corner opposite the USB cable and the red button is next to it. 
+The buttons have a 2-pin connector that needs to be connected to the USB joystick board. Below is a photo of the connectors. You might notice that the blue button is connected to the corner opposite the USB cable, and the red button is next to it. 
 
 ![setup/joystick-setup.jpg](setup/joystick-setup.jpg)
 
