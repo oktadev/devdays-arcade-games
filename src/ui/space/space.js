@@ -1341,7 +1341,7 @@ SpaceInvaders.WelcomeState = function (game) {
 
   // initialize the play game text.
   playText = new SpaceInvaders.TextEntity(game);
-  playText.setText("SPACE INVADERS");
+  playText.setText("IDENTITY INVADERS");
   playText.setAlign("center");
   playText.setFillStyle("#20ff20");
   playText.setX(CANVAS_WIDTH / 2);
