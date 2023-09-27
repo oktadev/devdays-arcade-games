@@ -2,29 +2,31 @@
 <html>
 
 <head>
-    <title>DevDay Arcade - Pacman</title>
+    <title>DevDays Arcade - Auth0 Identity Invaders</title>
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'" />
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'" />
-    <link rel="stylesheet" href="../lib/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="./pacman.css">
+    <link rel="stylesheet" type="text/css" href="./invader.css">
 </head>
 
 <body>
     <div id="shim">shim for font face</div>
     <img class="devday-logo" src="../img/devday23-logo-white.png" />
-    <div id="pacman"></div>
+    <div id="invader">
+        <canvas id="game-canvas"></canvas>
+    </div>
 
     <script type="text/javascript" src="../lib/modernizr.2.8.3.min.js"></script>
     <script type="text/javascript" src="../lib/jquery.2.1.3.min.js"></script>
-    <script type="text/javascript" src="./pacman.js"></script>
+    <script type="text/javascript" src="./invader.js"></script>
     <script>
 
-        var el = document.getElementById("pacman");
+        var el = document.getElementById("game-canvas");
 
         if (Modernizr.canvas && Modernizr.localstorage &&
-            Modernizr.audio && (Modernizr.audio.ogg || Modernizr.audio.mp3)) {
-            window.setTimeout(function () { PACMAN.init(el, "./"); }, 0);
+            Modernizr.audio && Modernizr.audio.wav) {
+            var invaders = new Invaders.Game();
+            invaders.start();
         } else {
             el.innerHTML = "Sorry, needs a decent browser<br /><small>" +
                 "(firefox 3.6+, Chrome 4+, Opera 10+ and Safari 4+)</small>";

@@ -39,12 +39,12 @@ const NONE = 4,
   COUNTDOWN = 8,
   EATEN_PAUSE = 9,
   DYING = 10,
-  Pacman = {};
+  Lockman = {};
 
 // game speed. Reduce if game is too difficult
-Pacman.FPS = 24;
+Lockman.FPS = 24;
 
-Pacman.Ghost = function (game, map, colour) {
+Lockman.Ghost = function (game, map, colour) {
   var position = null,
     direction = null,
     eatable = null,
@@ -145,7 +145,7 @@ Pacman.Ghost = function (game, map, colour) {
   }
 
   function secondsAgo(tick) {
-    return (game.getTick() - tick) / Pacman.FPS;
+    return (game.getTick() - tick) / Lockman.FPS;
   }
 
   function getColour() {
@@ -311,7 +311,7 @@ Pacman.Ghost = function (game, map, colour) {
   };
 };
 
-Pacman.User = function (game, map) {
+Lockman.User = function (game, map) {
   var position = null,
     direction = null,
     eaten = null,
@@ -466,18 +466,18 @@ Pacman.User = function (game, map) {
 
     if (
       ((isMidSquare(position.y) || isMidSquare(position.x)) &&
-        block === Pacman.BISCUIT) ||
-      block === Pacman.PILL
+        block === Lockman.BISCUIT) ||
+      block === Lockman.PILL
     ) {
-      map.setBlock(nextWhole, Pacman.EMPTY);
-      addScore(block === Pacman.BISCUIT ? 10 : 50);
+      map.setBlock(nextWhole, Lockman.EMPTY);
+      addScore(block === Lockman.BISCUIT ? 10 : 50);
       eaten += 1;
 
       if (eaten === 182) {
         game.completedLevel();
       }
 
-      if (block === Pacman.PILL) {
+      if (block === Lockman.PILL) {
         game.eatenPill();
       }
     }
@@ -587,7 +587,7 @@ Pacman.User = function (game, map) {
   };
 };
 
-Pacman.Map = function (size) {
+Lockman.Map = function (size) {
   var height = null,
     width = null,
     blockSize = size,
@@ -599,7 +599,7 @@ Pacman.Map = function (size) {
   }
 
   function isWall(pos) {
-    return withinBounds(pos.y, pos.x) && map[pos.y][pos.x] === Pacman.WALL;
+    return withinBounds(pos.y, pos.x) && map[pos.y][pos.x] === Lockman.WALL;
   }
 
   function isFloorSpace(pos) {
@@ -608,9 +608,9 @@ Pacman.Map = function (size) {
     }
     var peice = map[pos.y][pos.x];
     return (
-      peice === Pacman.EMPTY ||
-      peice === Pacman.BISCUIT ||
-      peice === Pacman.PILL
+      peice === Lockman.EMPTY ||
+      peice === Lockman.BISCUIT ||
+      peice === Lockman.PILL
     );
   }
 
@@ -621,8 +621,8 @@ Pacman.Map = function (size) {
     ctx.lineWidth = 5;
     ctx.lineCap = "round";
 
-    for (i = 0; i < Pacman.WALLS.length; i += 1) {
-      line = Pacman.WALLS[i];
+    for (i = 0; i < Lockman.WALLS.length; i += 1) {
+      line = Lockman.WALLS[i];
       ctx.beginPath();
 
       for (j = 0; j < line.length; j += 1) {
@@ -646,7 +646,7 @@ Pacman.Map = function (size) {
   }
 
   function reset() {
-    map = Pacman.MAP.clone();
+    map = Lockman.MAP.clone();
     height = map.length;
     width = map[0].length;
   }
@@ -666,7 +666,7 @@ Pacman.Map = function (size) {
 
     for (i = 0; i < height; i += 1) {
       for (j = 0; j < width; j += 1) {
-        if (map[i][j] === Pacman.PILL) {
+        if (map[i][j] === Lockman.PILL) {
           ctx.beginPath();
 
           ctx.fillStyle = BG_COLOR;
@@ -708,21 +708,21 @@ Pacman.Map = function (size) {
   function drawBlock(y, x, ctx) {
     var layout = map[y][x];
 
-    if (layout === Pacman.PILL) {
+    if (layout === Lockman.PILL) {
       return;
     }
 
     ctx.beginPath();
 
     if (
-      layout === Pacman.EMPTY ||
-      layout === Pacman.BLOCK ||
-      layout === Pacman.BISCUIT
+      layout === Lockman.EMPTY ||
+      layout === Lockman.BLOCK ||
+      layout === Lockman.BISCUIT
     ) {
       ctx.fillStyle = BG_COLOR;
       ctx.fillRect(x * blockSize, y * blockSize, blockSize, blockSize);
 
-      if (layout === Pacman.BISCUIT) {
+      if (layout === Lockman.BISCUIT) {
         ctx.fillStyle = BISCUIT_COLOR;
         // ctx.fillRect(
         //   x * blockSize + blockSize / 2.5,
@@ -759,7 +759,7 @@ Pacman.Map = function (size) {
   };
 };
 
-Pacman.Audio = function (game) {
+Lockman.Audio = function (game) {
   var files = [],
     endEvents = [],
     progressEvents = [],
@@ -847,7 +847,7 @@ Pacman.Audio = function (game) {
   };
 };
 
-var PACMAN = (function () {
+var LOCKMAN = (function () {
   var state = WAITING,
     audio = null,
     ghosts = [],
@@ -1061,11 +1061,11 @@ var PACMAN = (function () {
         `Press ${KEY_CODE_ENTER_TEXT} to go back to selection`,
         map.height * 10 + 25
       );
-    } else if (state === EATEN_PAUSE && tick - timerStart > Pacman.FPS / 3) {
+    } else if (state === EATEN_PAUSE && tick - timerStart > Lockman.FPS / 3) {
       map.draw(ctx);
       setState(PLAYING);
     } else if (state === DYING) {
-      if (tick - timerStart > Pacman.FPS * 2) {
+      if (tick - timerStart > Lockman.FPS * 2) {
         loseLife();
       } else {
         redrawBlock(userPos);
@@ -1073,10 +1073,10 @@ var PACMAN = (function () {
           redrawBlock(ghostPos[i].old);
           ghostPos.push(ghosts[i].draw(ctx));
         }
-        user.drawDead(ctx, (tick - timerStart) / (Pacman.FPS * 2));
+        user.drawDead(ctx, (tick - timerStart) / (Lockman.FPS * 2));
       }
     } else if (state === COUNTDOWN) {
-      diff = 5 + Math.floor((timerStart - tick) / Pacman.FPS);
+      diff = 5 + Math.floor((timerStart - tick) / Lockman.FPS);
 
       if (diff === 0) {
         map.draw(ctx);
@@ -1131,9 +1131,9 @@ var PACMAN = (function () {
 
     ctx = canvas.getContext("2d");
 
-    audio = new Pacman.Audio({ soundDisabled: soundDisabled });
-    map = new Pacman.Map(blockSize);
-    user = new Pacman.User(
+    audio = new Lockman.Audio({ soundDisabled: soundDisabled });
+    map = new Lockman.Map(blockSize);
+    user = new Lockman.User(
       {
         completedLevel: completedLevel,
         eatenPill: eatenPill,
@@ -1142,7 +1142,7 @@ var PACMAN = (function () {
     );
 
     for (i = 0, len = ghostSpecs.length; i < len; i += 1) {
-      ghost = new Pacman.Ghost({ getTick: getTick }, map, ghostSpecs[i]);
+      ghost = new Lockman.Ghost({ getTick: getTick }, map, ghostSpecs[i]);
       ghosts.push(ghost);
     }
 
@@ -1182,7 +1182,7 @@ var PACMAN = (function () {
     document.addEventListener("keydown", keyDown, true);
     document.addEventListener("keypress", keyPress, true);
 
-    timer = window.setInterval(mainLoop, 1000 / Pacman.FPS);
+    timer = window.setInterval(mainLoop, 1000 / Lockman.FPS);
   }
 
   return {
@@ -1202,13 +1202,13 @@ const KEY = {
   P: "KeyP",
 };
 
-Pacman.WALL = 0;
-Pacman.BISCUIT = 1;
-Pacman.EMPTY = 2;
-Pacman.BLOCK = 3;
-Pacman.PILL = 4;
+Lockman.WALL = 0;
+Lockman.BISCUIT = 1;
+Lockman.EMPTY = 2;
+Lockman.BLOCK = 3;
+Lockman.PILL = 4;
 
-Pacman.MAP = [
+Lockman.MAP = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
   [0, 4, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 4, 0],
@@ -1233,7 +1233,7 @@ Pacman.MAP = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
-Pacman.WALLS = [
+Lockman.WALLS = [
   [
     { move: [0, 9.5] },
     { line: [3, 9.5] },

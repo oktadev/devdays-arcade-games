@@ -2,31 +2,29 @@
 <html>
 
 <head>
-    <title>DevDays Arcade - Auth0 Pacman</title>
+    <title>DevDay Arcade - Lockman</title>
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'" />
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' 'self'" />
-    <link rel="stylesheet" type="text/css" href="./space.css">
+    <link rel="stylesheet" href="../lib/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./lockman.css">
 </head>
 
 <body>
     <div id="shim">shim for font face</div>
     <img class="devday-logo" src="../img/devday23-logo-white.png" />
-    <div id="space">
-        <canvas id="game-canvas"></canvas>
-    </div>
+    <div id="lockman"></div>
 
     <script type="text/javascript" src="../lib/modernizr.2.8.3.min.js"></script>
     <script type="text/javascript" src="../lib/jquery.2.1.3.min.js"></script>
-    <script type="text/javascript" src="./space.js"></script>
+    <script type="text/javascript" src="./lockman.js"></script>
     <script>
 
-        var el = document.getElementById("game-canvas");
+        var el = document.getElementById("lockman");
 
         if (Modernizr.canvas && Modernizr.localstorage &&
-            Modernizr.audio && Modernizr.audio.wav) {
-            var spaceInvaders = new SpaceInvaders.Game();
-            spaceInvaders.start();
+            Modernizr.audio && (Modernizr.audio.ogg || Modernizr.audio.mp3)) {
+            window.setTimeout(function () { LOCKMAN.init(el, "./"); }, 0);
         } else {
             el.innerHTML = "Sorry, needs a decent browser<br /><small>" +
                 "(firefox 3.6+, Chrome 4+, Opera 10+ and Safari 4+)</small>";

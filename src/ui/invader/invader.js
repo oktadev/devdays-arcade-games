@@ -25,8 +25,8 @@ function goBack(event) {
   }
 }
 
-/** A namespace for the Space Invaders game. */
-var SpaceInvaders = SpaceInvaders || {};
+/** A namespace for the Invaders game. */
+var Invaders = Invaders || {};
 
 /** *************************************************************************
  * A helper utility to create a four digit string from the given score.
@@ -36,7 +36,7 @@ var SpaceInvaders = SpaceInvaders || {};
  *
  * @param {number} score The score to be converted into a string.
  */
-SpaceInvaders.toScoreString = function (score) {
+Invaders.toScoreString = function (score) {
   var result = "NaN";
   if (typeof score == "number") {
     result = score.toString();
@@ -52,15 +52,15 @@ SpaceInvaders.toScoreString = function (score) {
 /** ***************************************************************************
  * The container that holds player specific data and state.
  *
- * Space invaders contains a support for single- and multiplayer game modes. It
+ * Invaders contains a support for single- and multiplayer game modes. It
  * is a good idea to store player specific data in a special container called a
  * context. It contains all player specific data, which helps us to keep player
  * data in a centralized place and also helps us to reconstruct the game state
  * when the player switch is requested after a player destruction in the game.
  *
- * @param {SpaceInvaders.Game} game A reference to parent game instance.
+ * @param {Invaders.Game} game A reference to parent game instance.
  */
-SpaceInvaders.PlayerContext = function (game) {
+Invaders.PlayerContext = function (game) {
   /** A reference to the root game instance. */
   this.game = game;
 
@@ -131,7 +131,7 @@ SpaceInvaders.PlayerContext = function (game) {
 };
 
 /** ***************************************************************************
- * The root game structure for the Space Invaders game.
+ * The root game structure for the Invaders game.
  *
  * This object module contains the necessary structure to glue the game objects
  * as a working game. It acts as the main entry point for the application which
@@ -139,14 +139,14 @@ SpaceInvaders.PlayerContext = function (game) {
  *
  * The application can be created and started with the following way:
  *
- * var game = new SpaceInvaders();
+ * var game = new Invaders();
  * game.start();
  *
  * After being constructed and called with the previously mentioned way, the
  * application starts running and will run until the browser window is being
  * closed or whether an application execption is raised.
  */
-SpaceInvaders.Game = function () {
+Invaders.Game = function () {
   /** A constant definition for the game framerate. */
   var FPS = 1000.0 / 60.0;
 
@@ -179,9 +179,9 @@ SpaceInvaders.Game = function () {
   var deltaAccumulator = 0;
 
   /** A container for the state and data of the 1st player. */
-  var player1Context = new SpaceInvaders.PlayerContext(this);
+  var player1Context = new Invaders.PlayerContext(this);
   /** A container for the state and data of the 2nd player. */
-  var player2Context = new SpaceInvaders.PlayerContext(this);
+  var player2Context = new Invaders.PlayerContext(this);
 
   /** The hi-score of the current game instace. */
   var hiScore = 0;
@@ -218,7 +218,7 @@ SpaceInvaders.Game = function () {
         scene.getScore2Text().blink();
         scene.getScore1Text().setVisible(false);
       }
-      scene.setState(new SpaceInvaders.PlayPlayerState(this));
+      scene.setState(new Invaders.PlayPlayerState(this));
     }
   };
 
@@ -241,7 +241,7 @@ SpaceInvaders.Game = function () {
    * currently no active scene, then this function returns the default value
    * (undefined) as a result.
    *
-   * @return {SpaceInvaders.Scene} The currently active scene or undefined.
+   * @return {Invaders.Scene} The currently active scene or undefined.
    */
   this.getScene = function () {
     return scene;
@@ -280,15 +280,15 @@ SpaceInvaders.Game = function () {
     // TODO make this a synchronous load to avoid invalid references?
     // load the source sprite sheet as an image.
     spriteSheet = new Image();
-    spriteSheet.src = "space_invaders_spritesheet.png";
+    spriteSheet.src = "invaders_spritesheet.png";
 
-    this.audio = new SpaceInvaders.Audio();
+    this.audio = new Invaders.Audio();
 
     // initialize the only scene used within the application.
-    scene = new SpaceInvaders.Scene(this);
+    scene = new Invaders.Scene(this);
 
     // construct and assign the initial welcoming state.
-    scene.setState(new SpaceInvaders.WelcomeState(this));
+    scene.setState(new Invaders.WelcomeState(this));
 
     var extension = Modernizr.audio.wav ? "wav" : "mp3";
     var audio_files = [
@@ -370,7 +370,7 @@ SpaceInvaders.Game = function () {
    * Game will always contain a context container for each player. The active
    * context instance will be changed whenever the active player is changed.
    *
-   * @returns {SpaceInvaders.PlayerContext} Context of the active player.
+   * @returns {Invaders.PlayerContext} Context of the active player.
    */
   this.getActiveContext = function () {
     return activePlayer == 1 ? player1Context : player2Context;
@@ -408,16 +408,16 @@ SpaceInvaders.Game = function () {
 };
 
 /** ***************************************************************************
- * An entity abstraction for all game objects within the Space Invaders game.
+ * An entity abstraction for all game objects within the Invaders game.
  *
  * This class acts as the root of all entities within the game scene. It does
  * contain all the shared definitions that must be present within all entities
  * that are created into the game scene. This also includes the root game and
  * scene instances as well as the 2d-coordinates of the entity.
  *
- * @param {SpaceInvaders.Game} game A reference to the target game instance.
+ * @param {Invaders.Game} game A reference to the target game instance.
  */
-SpaceInvaders.Entity = function (game) {
+Invaders.Entity = function (game) {
   /** A reference to the root game instance. */
   this.game = game;
   /** A reference to the used scene instance. */
@@ -455,10 +455,10 @@ SpaceInvaders.Entity = function (game) {
  * collision check with an another entity. The abstraction uses an axis-aligned
  * bounding box to encapsulate and check whether a collision is executed.
  *
- * @param {SpaceInvaders.Game} game A reference to the target game instance.
+ * @param {Invaders.Game} game A reference to the target game instance.
  */
-SpaceInvaders.CollideableEntity = function (game) {
-  SpaceInvaders.Entity.call(this, game);
+Invaders.CollideableEntity = function (game) {
+  Invaders.Entity.call(this, game);
 
   /** A constant default value for the AABB extent in the x-axis. */
   this.DEFAULT_EXTENT_X = 0;
@@ -485,7 +485,7 @@ SpaceInvaders.CollideableEntity = function (game) {
 
   /****************************************************************************
    * Check whether this entity collides with an another entity.
-   * @param {SpaceInvades.CollideableEntity} o Another entity to check against.
+   * @param {Invades.CollideableEntity} o Another entity to check against.
    */
   this.collides = function (o) {
     // no collision if either entity is currently not collideable.
@@ -554,17 +554,17 @@ SpaceInvaders.CollideableEntity = function (game) {
 };
 
 /** ***************************************************************************
- * A sprite entity for image sprites for the Space Invaders game.
+ * A sprite entity for image sprites for the Invaders game.
  *
  * This entity presents a drawable sprite entity that is drawn from an external
  * image file provided with the #setImage function. Note that it is typically
  * a good idea to put all sprites in a single sprite sheet so the same image is
  * being loaded only once and can be therefore used with all sprites.
  *
- * @param {SpaceInvaders.Game} game A reference to the root game instance.
+ * @param {Invaders.Game} game A reference to the root game instance.
  */
-SpaceInvaders.SpriteEntity = function (game) {
-  SpaceInvaders.CollideableEntity.call(this, game);
+Invaders.SpriteEntity = function (game) {
+  Invaders.CollideableEntity.call(this, game);
 
   /** A constant default for the sprite width. */
   this.DEFAULT_WIDTH = 0;
@@ -663,10 +663,10 @@ SpaceInvaders.SpriteEntity = function (game) {
  * collideable, movable and drawable sprite entities. For example the player
  * avatar and all enemies should be constructed from this structure.
  *
- * @param {SpaceInvaders.Game} game A reference to the target game instance.
+ * @param {Invaders.Game} game A reference to the target game instance.
  */
-SpaceInvaders.MovableSpriteEntity = function (game) {
-  SpaceInvaders.SpriteEntity.call(this, game);
+Invaders.MovableSpriteEntity = function (game) {
+  Invaders.SpriteEntity.call(this, game);
 
   /** A constant default for the velocity of the movement. */
   this.DEFAULT_VELOCITY = 0.0;
@@ -762,8 +762,8 @@ SpaceInvaders.MovableSpriteEntity = function (game) {
  * This structure contains the additional definitions required for the player
  * avatar object, which is the cannon tower that can be moved by the player.
  */
-SpaceInvaders.AvatarEntity = function (game, scene) {
-  SpaceInvaders.AnimatedMovableSpriteEntity.call(this, game);
+Invaders.AvatarEntity = function (game, scene) {
+  Invaders.AnimatedMovableSpriteEntity.call(this, game);
 
   this.explode = function () {
     game.audio.play("explosion");
@@ -821,10 +821,10 @@ SpaceInvaders.AvatarEntity = function (game, scene) {
  * Table is based on foundings from the following URL:
  * http://www.computerarcheology.com/Arcade/SpaceInvaders/Code.html
  *
- * @param {SpaceInvaders.Game} game A reference to the target game instance.
+ * @param {Invaders.Game} game A reference to the target game instance.
  */
-SpaceInvaders.AlienShotEntity = function (game, scene) {
-  SpaceInvaders.AnimatedMovableSpriteEntity.call(this, game);
+Invaders.AlienShotEntity = function (game, scene) {
+  Invaders.AnimatedMovableSpriteEntity.call(this, game);
 
   /** A counter to keep track of the amount of update calls. */
   var progressTicks = 0;
@@ -911,10 +911,10 @@ SpaceInvaders.AlienShotEntity = function (game, scene) {
  * and then use the explosion sprite to consume part of the shield pixels away.
  * Note that avatar and alien lasers collides with a different explosion sprite.
  *
- * @param {SpaceInvaders.Game} game A reference to the target game instance.
+ * @param {Invaders.Game} game A reference to the target game instance.
  */
-SpaceInvaders.Shield = function (game) {
-  SpaceInvaders.SpriteEntity.call(this, game);
+Invaders.Shield = function (game) {
+  Invaders.SpriteEntity.call(this, game);
 
   /** Sprite pixels from left-to-right and top-to-bottom order. */
   var pixels = undefined;
@@ -928,7 +928,7 @@ SpaceInvaders.Shield = function (game) {
    * use a broad (AABB-ABB) and narrow (pixel-pixel) phases to detect whether
    * the provided object hits the shield.
    *
-   * @param {SpaceInvaders.CollideableEntity} other Entity to check against.
+   * @param {Invaders.CollideableEntity} other Entity to check against.
    */
   this.preciseCollides = function (other) {
     if (this.collides(other)) {
@@ -944,7 +944,7 @@ SpaceInvaders.Shield = function (game) {
       }
       var data = pixels.data;
 
-      if (other instanceof SpaceInvaders.AvatarLaser) {
+      if (other instanceof Invaders.AvatarLaser) {
         for (var i = data.length - 1; i >= 0; i -= 4) {
           if (data[i + 3] != 0 && this.preciseCollide(data, i / 4, other)) {
             break;
@@ -1060,10 +1060,10 @@ SpaceInvaders.Shield = function (game) {
  * act as a placeholder for multiple sprites that must be manually assigned to
  * make the sprite image to change.
  *
- * @param {SpaceInvaders.Game} game A reference to the target game instance.
+ * @param {Invaders.Game} game A reference to the target game instance.
  */
-SpaceInvaders.AnimatedMovableSpriteEntity = function (game) {
-  SpaceInvaders.MovableSpriteEntity.call(this, game);
+Invaders.AnimatedMovableSpriteEntity = function (game) {
+  Invaders.MovableSpriteEntity.call(this, game);
 
   /** A constant default for the animation step size (0 = disable animation). */
   this.DEFAULT_ANIMATION_STEP_SIZE = 0;
@@ -1153,8 +1153,8 @@ SpaceInvaders.AnimatedMovableSpriteEntity = function (game) {
   };
 };
 
-SpaceInvaders.AvatarLaser = function (game) {
-  SpaceInvaders.AnimatedMovableSpriteEntity.call(this, game);
+Invaders.AvatarLaser = function (game) {
+  Invaders.AnimatedMovableSpriteEntity.call(this, game);
 
   /** *************************************************************************
    * Explode (i.e. destroy) the avatar laser shot explosion animation.
@@ -1174,15 +1174,15 @@ SpaceInvaders.AvatarLaser = function (game) {
 };
 
 /** ***************************************************************************
- * A textual entity for all texts used in the Space Invaders game.
+ * A textual entity for all texts used in the Invaders game.
  *
  * This class presents a textual entity within the game scene. It does really
  * an encapsulation of the 2d drawing context textual presentation functions.
  *
- * @param {SpaceInvaders.Game} game A reference to the target game instance.
+ * @param {Invaders.Game} game A reference to the target game instance.
  */
-SpaceInvaders.TextEntity = function (game) {
-  SpaceInvaders.Entity.call(this, game);
+Invaders.TextEntity = function (game) {
+  Invaders.Entity.call(this, game);
 
   /** A constant default value for the text to be drawn. */
   this.DEFAULT_TEXT = "";
@@ -1310,16 +1310,16 @@ SpaceInvaders.TextEntity = function (game) {
 };
 
 /** ***************************************************************************
- * A welcome state for the Space Invaders game.
+ * A welcome state for the Invaders game.
  *
  * This state contains the definitions required to show the welcoming message
  * to the user(s). It contains the game name along with the score instructions
  * and an instruction how to start the game. It does not however contain a
  * complex set of game logics as the actual game simulation is not required.
  *
- * @param {SpaceInvaders.Game} game A reference to the root game instance.
+ * @param {Invaders.Game} game A reference to the root game instance.
  */
-SpaceInvaders.WelcomeState = function (game) {
+Invaders.WelcomeState = function (game) {
   /** A reference to the root game instance. */
   this.game = game;
 
@@ -1340,7 +1340,7 @@ SpaceInvaders.WelcomeState = function (game) {
   var tableRow4Text;
 
   // initialize the play game text.
-  playText = new SpaceInvaders.TextEntity(game);
+  playText = new Invaders.TextEntity(game);
   playText.setText("IDENTITY INVADERS");
   playText.setAlign("center");
   playText.setFillStyle("#20ff20");
@@ -1348,7 +1348,7 @@ SpaceInvaders.WelcomeState = function (game) {
   playText.setY(175);
 
   // initialize the single player text.
-  singlePlayerText = new SpaceInvaders.TextEntity(game);
+  singlePlayerText = new Invaders.TextEntity(game);
   singlePlayerText.setText(`USE ${KEY_CODE_UP_TEXT} FOR A 1 PLAYER GAME`);
   singlePlayerText.setFont("16pt BDCartoonShoutRegular");
   singlePlayerText.setAlign("center");
@@ -1360,7 +1360,7 @@ SpaceInvaders.WelcomeState = function (game) {
   singlePlayerText.blink();
 
   // initialize the multiplayer text.
-  multiPlayerText = new SpaceInvaders.TextEntity(game);
+  multiPlayerText = new Invaders.TextEntity(game);
   multiPlayerText.setText(`USE ${KEY_CODE_DOWN_TEXT} FOR A 2 PLAYER GAME`);
   multiPlayerText.setFont("16pt BDCartoonShoutRegular");
   multiPlayerText.setAlign("center");
@@ -1371,14 +1371,14 @@ SpaceInvaders.WelcomeState = function (game) {
   multiPlayerText.setBlinkFrequency(30);
   multiPlayerText.blink();
 
-  controlsText = new SpaceInvaders.TextEntity(game);
+  controlsText = new Invaders.TextEntity(game);
   controlsText.setText(`USE JOYSTICK AND ${KEY_CODE_SPACE_TEXT} TO PLAY`);
   controlsText.setFont("16pt BDCartoonShoutRegular");
   controlsText.setAlign("center");
   controlsText.setX(playText.getX());
   controlsText.setY(multiPlayerText.getY() + 50);
 
-  controlsText2 = new SpaceInvaders.TextEntity(game);
+  controlsText2 = new Invaders.TextEntity(game);
   controlsText2.setText(`PRESS ${KEY_CODE_ENTER_TEXT} TO GO BACK TO SELECTION`);
   controlsText2.setFont("16pt BDCartoonShoutRegular");
   controlsText2.setAlign("center");
@@ -1386,14 +1386,14 @@ SpaceInvaders.WelcomeState = function (game) {
   controlsText2.setY(controlsText.getY() + 50);
 
   // initiailize the score advance table text.
-  tableCaptionText = new SpaceInvaders.TextEntity(game);
+  tableCaptionText = new Invaders.TextEntity(game);
   tableCaptionText.setText("-- SCORE ADVANCE TABLE --");
   tableCaptionText.setAlign("center");
   tableCaptionText.setX(playText.getX());
   tableCaptionText.setY(controlsText2.getY() + 75);
 
   // initialize the 1st table row sprite image.
-  tableRow1Sprite = new SpaceInvaders.SpriteEntity(game);
+  tableRow1Sprite = new Invaders.SpriteEntity(game);
   tableRow1Sprite.setImage(game.getSpriteSheet());
   tableRow1Sprite.setX(playText.getX() - 130);
   tableRow1Sprite.setY(tableCaptionText.getY() + 25);
@@ -1403,13 +1403,13 @@ SpaceInvaders.WelcomeState = function (game) {
   tableRow1Sprite.setClipY(92);
 
   // initialize the 1st table row text.
-  tableRow1Text = new SpaceInvaders.TextEntity(game);
+  tableRow1Text = new Invaders.TextEntity(game);
   tableRow1Text.setText("= ?  MYSTERY");
   tableRow1Text.setX(tableRow1Sprite.getX() + 10 + tableRow1Sprite.getWidth());
   tableRow1Text.setY(tableRow1Sprite.getY() + 20);
 
   // initialize the 2nd table row sprite image.
-  tableRow2Sprite = new SpaceInvaders.SpriteEntity(game);
+  tableRow2Sprite = new Invaders.SpriteEntity(game);
   tableRow2Sprite.setImage(game.getSpriteSheet());
   tableRow2Sprite.setX(playText.getX() - 120);
   tableRow2Sprite.setY(tableRow1Sprite.getY() + 35);
@@ -1419,13 +1419,13 @@ SpaceInvaders.WelcomeState = function (game) {
   tableRow2Sprite.setClipY(63);
 
   // initialize the 2nd table row text.
-  tableRow2Text = new SpaceInvaders.TextEntity(game);
+  tableRow2Text = new Invaders.TextEntity(game);
   tableRow2Text.setText("= 30 POINTS");
   tableRow2Text.setX(tableRow1Text.getX());
   tableRow2Text.setY(tableRow2Sprite.getY() + 22);
 
   // initialize the 3rd table row sprite image.
-  tableRow3Sprite = new SpaceInvaders.SpriteEntity(game);
+  tableRow3Sprite = new Invaders.SpriteEntity(game);
   tableRow3Sprite.setImage(game.getSpriteSheet());
   tableRow3Sprite.setX(playText.getX() - 125);
   tableRow3Sprite.setY(tableRow2Sprite.getY() + 35);
@@ -1435,13 +1435,13 @@ SpaceInvaders.WelcomeState = function (game) {
   tableRow3Sprite.setClipY(34);
 
   // initialize the 3rd table row text.
-  tableRow3Text = new SpaceInvaders.TextEntity(game);
+  tableRow3Text = new Invaders.TextEntity(game);
   tableRow3Text.setText("= 20 POINTS");
   tableRow3Text.setX(tableRow1Text.getX());
   tableRow3Text.setY(tableRow3Sprite.getY() + 22);
 
   // initialize the 4th table row sprite image.
-  tableRow4Sprite = new SpaceInvaders.SpriteEntity(game);
+  tableRow4Sprite = new Invaders.SpriteEntity(game);
   tableRow4Sprite.setImage(game.getSpriteSheet());
   tableRow4Sprite.setX(playText.getX() - 125);
   tableRow4Sprite.setY(tableRow3Sprite.getY() + 35);
@@ -1451,7 +1451,7 @@ SpaceInvaders.WelcomeState = function (game) {
   tableRow4Sprite.setClipY(5);
 
   // initialize the 4th table row text.
-  tableRow4Text = new SpaceInvaders.TextEntity(game);
+  tableRow4Text = new Invaders.TextEntity(game);
   tableRow4Text.setText("= 10 POINTS");
   tableRow4Text.setX(tableRow1Text.getX());
   tableRow4Text.setY(tableRow4Sprite.getY() + 22);
@@ -1542,9 +1542,9 @@ SpaceInvaders.WelcomeState = function (game) {
  * should prepare itself to play the game. This is a typical transition between
  * the players when the multiplayer game mode is being used.
  *
- * @param {SpaceInvaders.Game} game A reference to the root game instance.
+ * @param {Invaders.Game} game A reference to the root game instance.
  */
-SpaceInvaders.PlayPlayerState = function (game) {
+Invaders.PlayPlayerState = function (game) {
   /** A constant definition of ticks before this state automatically proceeds. */
   this.VISIBILITY_TICKS = 30 * 5;
 
@@ -1554,7 +1554,7 @@ SpaceInvaders.PlayPlayerState = function (game) {
   var text;
 
   // initialize the text describing the player to play next.
-  text = new SpaceInvaders.TextEntity(game);
+  text = new Invaders.TextEntity(game);
   text.setText("PLAY PLAYER<" + game.getActivePlayer() + ">");
   text.setAlign("center");
   text.setX(CANVAS_WIDTH / 2);
@@ -1567,7 +1567,7 @@ SpaceInvaders.PlayPlayerState = function (game) {
   this.update = function (dt) {
     tickCounter--;
     if (tickCounter <= 0) {
-      game.getScene().setState(new SpaceInvaders.IngameState(game));
+      game.getScene().setState(new Invaders.IngameState(game));
     }
   };
 
@@ -1601,15 +1601,15 @@ SpaceInvaders.PlayPlayerState = function (game) {
 };
 
 /** ***************************************************************************
- * The ingame state for the Space Invaders game.
+ * The ingame state for the Invaders game.
  *
  * This is the state where the player(s) actually play the game. Here we allow
  * users to move and fire with the turret so they can prevent the earth from
  * being invaded by the invaders coming from the space.
  *
- * @param {SpaceInvaders.Game} game A reference to the root game instance.
+ * @param {Invaders.Game} game A reference to the root game instance.
  */
-SpaceInvaders.IngameState = function (game) {
+Invaders.IngameState = function (game) {
   /** A reference to the root game instance. */
   this.game = game;
 
@@ -1721,7 +1721,7 @@ SpaceInvaders.IngameState = function (game) {
         // 672 - 66
         var x = 66;
         for (col = 0; col < 11; col++) {
-          var alien = new SpaceInvaders.AnimatedMovableSpriteEntity(game);
+          var alien = new Invaders.AnimatedMovableSpriteEntity(game);
           alien.setImage(game.getSpriteSheet());
           alien.setDirectionX(1);
           alien.setVelocity(0.4);
@@ -1757,7 +1757,7 @@ SpaceInvaders.IngameState = function (game) {
     const x_offset = 0; //100;
     shields = ctx.getShieldStates();
     if (shields == undefined) {
-      var shield1 = new SpaceInvaders.Shield(game);
+      var shield1 = new Invaders.Shield(game);
       shield1.setImage(game.getSpriteSheet());
       shield1.setWidth(66);
       shield1.setHeight(48);
@@ -1766,7 +1766,7 @@ SpaceInvaders.IngameState = function (game) {
       shield1.setX(135 + x_offset - shield1.getWidth() / 2);
       shield1.setY(shield_y);
 
-      var shield2 = new SpaceInvaders.Shield(game);
+      var shield2 = new Invaders.Shield(game);
       shield2.setImage(game.getSpriteSheet());
       shield2.setWidth(66);
       shield2.setHeight(48);
@@ -1775,7 +1775,7 @@ SpaceInvaders.IngameState = function (game) {
       shield2.setX(269 + x_offset - shield2.getWidth() / 2);
       shield2.setY(shield_y);
 
-      var shield3 = new SpaceInvaders.Shield(game);
+      var shield3 = new Invaders.Shield(game);
       shield3.setImage(game.getSpriteSheet());
       shield3.setWidth(66);
       shield3.setHeight(48);
@@ -1784,7 +1784,7 @@ SpaceInvaders.IngameState = function (game) {
       shield3.setX(403 + x_offset - shield3.getWidth() / 2);
       shield3.setY(shield_y);
 
-      var shield4 = new SpaceInvaders.Shield(game);
+      var shield4 = new Invaders.Shield(game);
       shield4.setImage(game.getSpriteSheet());
       shield4.setWidth(66);
       shield4.setHeight(48);
@@ -1802,7 +1802,7 @@ SpaceInvaders.IngameState = function (game) {
   };
 
   // initialize the green static footer line at the bottom of the screen.
-  footerLine = new SpaceInvaders.SpriteEntity(game);
+  footerLine = new Invaders.SpriteEntity(game);
   footerLine.setImage(game.getSpriteSheet());
   footerLine.setX(0); //100
   footerLine.setY(CANVAS_HEIGHT - 51);
@@ -1812,7 +1812,7 @@ SpaceInvaders.IngameState = function (game) {
   footerLine.setClipY(117);
 
   // initialize the green avatar moved by the player.
-  avatar = new SpaceInvaders.AvatarEntity(game, this);
+  avatar = new Invaders.AvatarEntity(game, this);
   avatar.setImage(game.getSpriteSheet());
   avatar.setWidth(40);
   avatar.setHeight(24);
@@ -1824,7 +1824,7 @@ SpaceInvaders.IngameState = function (game) {
 
   // initialize a single laser for the avatar.
   // we can reuse the same laser instance for the avatar.
-  avatarLaser = new SpaceInvaders.AvatarLaser(game);
+  avatarLaser = new Invaders.AvatarLaser(game);
   avatarLaser.setImage(game.getSpriteSheet());
   avatarLaser.setWidth(6);
   avatarLaser.setHeight(9);
@@ -1846,7 +1846,7 @@ SpaceInvaders.IngameState = function (game) {
   var lives = ctx.getLives();
 
   // initialize the text indicating the amount lifes.
-  lifesText = new SpaceInvaders.TextEntity(game);
+  lifesText = new Invaders.TextEntity(game);
   lifesText.setText(lives.toString());
   lifesText.setX(27);
   lifesText.setY(CANVAS_HEIGHT - 15);
@@ -1854,7 +1854,7 @@ SpaceInvaders.IngameState = function (game) {
   // initialize the sprites describing the reserved lives.
   lifeSprites = [];
   for (i = 0; i < lives - 1; i++) {
-    var sprite = new SpaceInvaders.SpriteEntity(game);
+    var sprite = new Invaders.SpriteEntity(game);
     sprite.setImage(game.getSpriteSheet());
     sprite.setWidth(40);
     sprite.setHeight(24);
@@ -1866,7 +1866,7 @@ SpaceInvaders.IngameState = function (game) {
   }
 
   // initialize the text that indicates that the game has ended.
-  gameOverText = new SpaceInvaders.TextEntity(game);
+  gameOverText = new Invaders.TextEntity(game);
   gameOverText.setAlign("center");
   gameOverText.setFillStyle("#f50305");
   gameOverText.setText("GAME OVER");
@@ -1875,7 +1875,7 @@ SpaceInvaders.IngameState = function (game) {
   gameOverText.setY(135);
 
   // initialize the text that indicates how to continue from game over.
-  gameOverInstructions = new SpaceInvaders.TextEntity(game);
+  gameOverInstructions = new Invaders.TextEntity(game);
   gameOverInstructions.setAlign("center");
   gameOverInstructions.setFillStyle("#f50305");
   gameOverInstructions.setText(`PRESS ${KEY_CODE_ENTER} TO CONTINUE`);
@@ -1884,28 +1884,28 @@ SpaceInvaders.IngameState = function (game) {
   gameOverInstructions.setY(gameOverText.getY() + 40);
 
   // initialize an out-of-bounds detector at the left side of the scene.
-  leftOutOfBoundsDetector = new SpaceInvaders.CollideableEntity(game);
+  leftOutOfBoundsDetector = new Invaders.CollideableEntity(game);
   leftOutOfBoundsDetector.setX(-100);
   leftOutOfBoundsDetector.setY(0);
   leftOutOfBoundsDetector.setExtentX(50);
   leftOutOfBoundsDetector.setExtentY(CANVAS_HEIGHT / 2);
 
   // initialize an out-of-bounds detector at the right side of the scene.
-  rightOutOfBoundsDetector = new SpaceInvaders.CollideableEntity(game);
+  rightOutOfBoundsDetector = new Invaders.CollideableEntity(game);
   rightOutOfBoundsDetector.setX(CANVAS_WIDTH);
   rightOutOfBoundsDetector.setY(0);
   rightOutOfBoundsDetector.setExtentX(50);
   rightOutOfBoundsDetector.setExtentY(CANVAS_HEIGHT / 2);
 
   // initialize an out-of-bounds detector at the top of the scene.
-  topOutOfBoundsDetector = new SpaceInvaders.CollideableEntity(game);
+  topOutOfBoundsDetector = new Invaders.CollideableEntity(game);
   topOutOfBoundsDetector.setX(0);
   topOutOfBoundsDetector.setY(0);
   topOutOfBoundsDetector.setExtentX(CANVAS_HEIGHT / 2);
   topOutOfBoundsDetector.setExtentY(45);
 
   // initialize the flying saucer at the top-right of the screen.
-  flyingSaucer = new SpaceInvaders.AnimatedMovableSpriteEntity(game);
+  flyingSaucer = new Invaders.AnimatedMovableSpriteEntity(game);
   flyingSaucer.setImage(game.getSpriteSheet());
   flyingSaucer.setVelocity(0.15);
   flyingSaucer.setEnabled(false);
@@ -1922,14 +1922,14 @@ SpaceInvaders.IngameState = function (game) {
   this.constructAliens();
 
   // initialize the left alien director for alien and avatar movement restrictions.
-  alienLeftBoundsDetector = new SpaceInvaders.CollideableEntity(game);
+  alienLeftBoundsDetector = new Invaders.CollideableEntity(game);
   alienLeftBoundsDetector.setX(-45);
   alienLeftBoundsDetector.setY(0);
   alienLeftBoundsDetector.setExtentX(45);
   alienLeftBoundsDetector.setExtentY(CANVAS_HEIGHT / 2);
 
   // initialize the right alien director for alien and avatar movement restrictions.
-  alienRightBoundsDetector = new SpaceInvaders.CollideableEntity(game);
+  alienRightBoundsDetector = new Invaders.CollideableEntity(game);
   alienRightBoundsDetector.setX(CANVAS_WIDTH - 45);
   alienRightBoundsDetector.setY(0);
   alienRightBoundsDetector.setExtentX(45);
@@ -1940,7 +1940,7 @@ SpaceInvaders.IngameState = function (game) {
   // ===============
 
   // initialize the rolling (i.e. homing) alien shot.
-  var rollingShot = new SpaceInvaders.AlienShotEntity(game, this);
+  var rollingShot = new Invaders.AlienShotEntity(game, this);
   rollingShot.setImage(game.getSpriteSheet());
   rollingShot.setWidth(9);
   rollingShot.setHeight(21);
@@ -1956,7 +1956,7 @@ SpaceInvaders.IngameState = function (game) {
   rollingShot.setEnabled(false);
 
   // initialize the plunger alien shot.
-  var plungerShot = new SpaceInvaders.AlienShotEntity(game, this);
+  var plungerShot = new Invaders.AlienShotEntity(game, this);
   plungerShot.setImage(game.getSpriteSheet());
   plungerShot.setWidth(9);
   plungerShot.setHeight(18);
@@ -1972,7 +1972,7 @@ SpaceInvaders.IngameState = function (game) {
   plungerShot.setEnabled(false);
 
   // initialize the squiggly alien shot.
-  var squigglyShot = new SpaceInvaders.AlienShotEntity(game, this);
+  var squigglyShot = new Invaders.AlienShotEntity(game, this);
   squigglyShot.setImage(game.getSpriteSheet());
   squigglyShot.setWidth(9);
   squigglyShot.setHeight(21);
@@ -2064,7 +2064,7 @@ SpaceInvaders.IngameState = function (game) {
         if (playerIndex == 1) {
           game.setActivePlayer(2);
           var scene = game.getScene();
-          var state = new SpaceInvaders.PlayPlayerState(game);
+          var state = new Invaders.PlayPlayerState(game);
           scene.setState(state);
         } else {
           // check whether the game should end.
@@ -2090,7 +2090,7 @@ SpaceInvaders.IngameState = function (game) {
           } else {
             game.setActivePlayer(1);
             var scene = game.getScene();
-            var state = new SpaceInvaders.PlayPlayerState(game);
+            var state = new Invaders.PlayPlayerState(game);
             scene.setState(state);
           }
         }
@@ -2144,7 +2144,7 @@ SpaceInvaders.IngameState = function (game) {
       if (activeAlienCount <= 0) {
         ctx.setLevel(ctx.getLevel() + 1);
         var scene = game.getScene();
-        scene.setState(new SpaceInvaders.PlayPlayerState(game));
+        scene.setState(new Invaders.PlayPlayerState(game));
         return;
       }
     }
@@ -2476,7 +2476,7 @@ SpaceInvaders.IngameState = function (game) {
 
         // return back to the welcome scene.
         var scene = game.getScene();
-        var state = new SpaceInvaders.WelcomeState(game);
+        var state = new Invaders.WelcomeState(game);
         scene.setState(state);
         break;
       }
@@ -2505,18 +2505,18 @@ SpaceInvaders.IngameState = function (game) {
 };
 
 /** ***************************************************************************
- * The scene used within the Space Invaders game application.
+ * The scene used within the Invaders game application.
  *
- * Space Invaders contains only one scene that is kept visible during the whole
+ * Invaders contains only one scene that is kept visible during the whole
  * application execution. This scene will always contain the 3 score at the top
  * of the scene (i.e. 1st and 2nd player scores and the high score).The center
  * contents of the screen will be changed dynamically based on the current state
  * of the game. The original version also contained the "Credit" section always
  * visible at the bottom-right corner of the scene, but we can leave that out.
  *
- * @param {SpaceInvaders.Game} game A reference to the target game instance.
+ * @param {Invaders.Game} game A reference to the target game instance.
  */
-SpaceInvaders.Scene = function (game) {
+Invaders.Scene = function (game) {
   /** A reference to the root game instance. */
   this.game = game;
 
@@ -2536,42 +2536,42 @@ SpaceInvaders.Scene = function (game) {
   var state;
 
   // initialize the static caption for the 1st player score.
-  score1Caption = new SpaceInvaders.TextEntity(game);
+  score1Caption = new Invaders.TextEntity(game);
   score1Caption.setText("SCORE<1>");
   score1Caption.setAlign("center");
   score1Caption.setX(125);
   score1Caption.setY(40);
 
   // initialize the static caption for the high score.
-  hiScoreCaption = new SpaceInvaders.TextEntity(game);
+  hiScoreCaption = new Invaders.TextEntity(game);
   hiScoreCaption.setText("HI-SCORE");
   hiScoreCaption.setAlign("center");
   hiScoreCaption.setX(CANVAS_WIDTH / 2);
   hiScoreCaption.setY(score1Caption.getY());
 
   // initialize the static caption for the 1st player score.
-  score2Caption = new SpaceInvaders.TextEntity(game);
+  score2Caption = new Invaders.TextEntity(game);
   score2Caption.setText("SCORE<2>");
   score2Caption.setAlign("center");
   score2Caption.setX(CANVAS_WIDTH - 130);
   score2Caption.setY(score1Caption.getY());
 
   // initialize the dynamic score value for the 1st player score.
-  score1Text = new SpaceInvaders.TextEntity(game);
+  score1Text = new Invaders.TextEntity(game);
   score1Text.setText("0000");
   score1Text.setAlign("center");
   score1Text.setX(score1Caption.getX());
   score1Text.setY(score1Caption.getY() + 35);
 
   // initialize the dynamic score value for the high score.
-  hiScoreText = new SpaceInvaders.TextEntity(game);
+  hiScoreText = new Invaders.TextEntity(game);
   hiScoreText.setText("0000");
   hiScoreText.setAlign("center");
   hiScoreText.setX(hiScoreCaption.getX());
   hiScoreText.setY(score1Text.getY());
 
   // initialize the dynamic score value for the 2nd player score.
-  score2Text = new SpaceInvaders.TextEntity(game);
+  score2Text = new Invaders.TextEntity(game);
   score2Text.setText("0000");
   score2Text.setAlign("center");
   score2Text.setX(score2Caption.getX());
@@ -2584,7 +2584,7 @@ SpaceInvaders.Scene = function (game) {
    * it can perform any cleanup e.g. removing listeners from DOM objects etc.
    * When the new state is assigned, it will be entered with the #enter method.
    *
-   * @param {SpaceInvaders.<*>State} newState A state to be assigned.
+   * @param {Invaders.<*>State} newState A state to be assigned.
    */
   this.setState = function (newState) {
     // exit from the previous state.
@@ -2608,12 +2608,12 @@ SpaceInvaders.Scene = function (game) {
   this.update = function (dt) {
     // ensure that all visible score-markers are up-to-date.
     score1Text.setText(
-      SpaceInvaders.toScoreString(this.player1Context.getScore())
+      Invaders.toScoreString(this.player1Context.getScore())
     );
     score2Text.setText(
-      SpaceInvaders.toScoreString(this.player2Context.getScore())
+      Invaders.toScoreString(this.player2Context.getScore())
     );
-    hiScoreText.setText(SpaceInvaders.toScoreString(game.getHiScore()));
+    hiScoreText.setText(Invaders.toScoreString(game.getHiScore()));
 
     score1Caption.update(dt);
     hiScoreCaption.update(dt);
@@ -2653,7 +2653,7 @@ SpaceInvaders.Scene = function (game) {
   };
 };
 
-SpaceInvaders.Audio = function () {
+Invaders.Audio = function () {
   var files = [],
     endEvents = [],
     progressEvents = [],

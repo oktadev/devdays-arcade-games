@@ -1,6 +1,6 @@
 # Auth0 by Okta - DevDay Arcade Games
 
-Custom Pacman and Space Invader games for Auth0 DevDay experience at Oktane 2023.
+Lockman and Identity Invader games for Auth0 DevDay experience at Oktane 2023.
 
 The game is written in JavaScript and packaged as an [Electron](https://www.electronjs.org/) desktop app.
 
@@ -45,17 +45,17 @@ For the joystick and buttons keycode mapping needs to be done in three places.
 
 1. **Welcome screen**: In `src/ui/script.js` change key values
    1. **Default**: `ArrowLeft` and `ArrowRight` to choose the game and `Enter` to select.
-2. **Pacman**: In `src/ui/pacman/pacman.js` change the values for constants (`KEY_CODE_*`) at the start of the file
+2. **Lockman**: In `src/ui/lockman/lockman.js` change the values for constants (`KEY_CODE_*`) at the start of the file
    1. **Default**: `ArrowLeft`, `ArrowRight`, `ArrowUp` and `ArrowDown` to navigate. `Space` to start game and `Enter` to go back to the welcome screen.
-3. **Identity invaders**: In `src/ui/space/space.js` change the values for constants (`KEY_CODE_*`) at the start of the file
+3. **Identity invaders**: In `src/ui/invader/invader.js` change the values for constants (`KEY_CODE_*`) at the start of the file
    1. **Default**: `ArrowUp` and `ArrowDown` to select single or multiplayer. `ArrowLeft`, `ArrowRight` to navigate. `Space` to fire and `Enter` to go back to the welcome screen.
 
 ### Resolution
 
 The game resolution can be changed in following places
 
-- **Pacman**: Update height and width for `#pacman` in `src/ui/pacman/pacman.css`
-- **Identity Invaders**: Update `CANVAS_WIDTH` & `CANVAS_HEIGHT` in `src/ui/space/space.js`
+- **Lockman**: Update height and width for `#lockman` in `src/ui/lockman/lockman.css`
+- **Identity Invaders**: Update `CANVAS_WIDTH` & `CANVAS_HEIGHT` in `src/ui/invader/invader.js`
 
 ## Hardware Setup
 
@@ -105,5 +105,5 @@ The joystick should have its connector at the bottom when you map things. The la
 
 ## Credits
 
-- Pacman based on [github.com/daleharvey/pacman](https://github.com/daleharvey/pacman) (WTFPL licensed)
-- Space Invader based on [github.com/toivjon/html5-space-invaders](https://github.com/toivjon/html5-space-invaders) (MIT licensed)
+- Lockman based on [github.com/daleharvey/pacman](https://github.com/daleharvey/pacman) (WTFPL licensed)
+- Identity Invader based on [github.com/toivjon/html5-space-invaders](https://github.com/toivjon/html5-space-invaders) (MIT licensed)
