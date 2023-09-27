@@ -1,7 +1,7 @@
 {
   "name": "devdays-arcade-games",
   "productName": "Devdays-arcade-games",
-  "version": "3.0.2",
+  "version": "4.0.0",
   "description": "Custom Lockman and Identity Invaders game",
   "main": "src/main.js",
   "scripts": {
