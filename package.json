@@ -8,7 +8,8 @@
     "start": "electron src/main.js",
     "postinstall": "electron-builder install-app-deps",
     "build-linux": "electron-builder --linux --x64",
-    "build-rpi": "electron-builder --linux --arm64",
+    "build-rpi-8": "electron-builder --linux --arm64",
+    "build-rpi-7": "electron-builder --linux --armv7l",
     "build-win": "electron-builder --windows",
     "build-mac": "electron-builder --mac",
     "release": "electron-builder --mac --windows --linux --publish always"

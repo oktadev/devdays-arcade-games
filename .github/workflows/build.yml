@@ -11,6 +11,7 @@ jobs:
           - { os: "windows-latest", arch: "x64",    artifact_prefix: "windows" }
           - { os: "ubuntu-latest",  arch: "x64",    artifact_prefix: "linux"   }
           - { os: "ubuntu-latest",  arch: "arm64",  artifact_prefix: "arm"     }
+          - { os: "ubuntu-latest",  arch: "armv7l", artifact_prefix: "arm"     }
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v4
