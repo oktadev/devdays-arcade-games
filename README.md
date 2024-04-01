@@ -10,18 +10,19 @@ There is a GitHub action workflow (`.github/workflows/build.yml`) that builds an
 
 1. Update the `package.json` and bump the `version`. For example `3.0.0`
 2. Run `npm install` to update `package-lock.json` 
-3. Create a tag `git tag v3.0.0`
+3. Commit and create a tag `git tag v3.0.0`
 4. Push the tags `git push && git push --tags` this will trigger the build and create a new release
 5. Go to [release](https://github.com/auth0-developer-hub/devdays-arcade-games/releases) and find the draft release. Edit and publish.
 
 ## Installing and running the game binaries
 
-### Raspberry PI 4
+### Raspberry PI 4B/400
 
-1. Download the `DevDay-Arcade-Games-x.x.x-arm64.AppImage` file from the latest [release](https://github.com/auth0-developer-hub/devdays-arcade-games/releases) to the Raspberry PI. Make sure to download the `arm64` version.
-2. Run `chmod +x DevDay-Arcade-Games-x.x.x-arm64.AppImage`
-3. Install FUSE: `sudo apt-get install libfuse2`
-4. Start the games with `./DevDay-Arcade-Games-x.x.x-arm64.AppImage`
+1. Check the architecture of the Raspberry PI using `uname -m`
+1. Download the `DevDay-Arcade-Games-x.x.x-y.AppImage` file from the latest [release](https://github.com/auth0-developer-hub/devdays-arcade-games/releases) to the Raspberry PI. Make sure to download the `arm64` or `armv7l` version based on the result from the previous step.
+2. Run `chmod +x DevDay-Arcade-Games-x.x.x-y.AppImage`
+3. Install FUSE if required: `sudo apt-get install libfuse2`
+4. Start the games with `./DevDay-Arcade-Games-x.x.x-y.AppImage`
 
 ### Windows
 
@@ -41,7 +42,7 @@ Builds can be created locally. But keep in mind that you can only build for the 
 
 ### Controls
 
-For the joystick and buttons keycode mapping needs to be done in three places.
+For the joystick and buttons, keycode mapping needs to be done in three places.
 
 1. **Welcome screen**: In `src/ui/script.js` change key values
    1. **Default**: `ArrowLeft` and `ArrowRight` to choose the game and `Enter` to select.

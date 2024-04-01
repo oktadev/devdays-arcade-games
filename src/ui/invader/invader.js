@@ -1,7 +1,7 @@
 const KEY_CODE_ENTER = "Enter";
 const KEY_CODE_ENTER_TEXT = "Blue button";
 const KEY_CODE_SPACE = "Space";
-const KEY_CODE_SPACE_TEXT = "Red Button";
+const KEY_CODE_SPACE_TEXT = "Yellow Button";
 const KEY_CODE_LEFT = "ArrowLeft";
 const KEY_CODE_RIGHT = "ArrowRight";
 const KEY_CODE_UP = "ArrowUp";
